@@ -73,27 +73,22 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 80.0, horizontal: 40.0),
           child: Column(children: [
-            Image.asset(
-              "assets/hospital.png",
-              scale: 3,
-            ),
+            Image.asset("assets/hospital.png", scale: 3),
             SizedBox(height: 40.0),
             RichText(
               text: TextSpan(
                 // Note: Styles for TextSpans must be explicitly defined.
                 // Child text spans will inherit styles from parent
-                style: TextStyle(
-                  fontSize: 12.0,
-                  color: Color(0xFF666666),
-                ),
+                style: TextStyle(fontSize: 12.0, color: Color(0xFF666666)),
                 children: [
                   TextSpan(
                     text: 'You are checking into ',
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                   TextSpan(
-                      text: 'West Haven Clinic',
-                      style: TextStyle(fontWeight: FontWeight.w500)),
+                    text: 'West Haven Clinic',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
                 ],
               ),
             ),
@@ -105,17 +100,20 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("7HAT46",
-                    style: new TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 6.0,
-                        decoration: TextDecoration.none,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: "Jura",
-                        fontSize: 25)),
+                child: Text(
+                  "7HAT46",
+                  style: new TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 6.0,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: "Jura",
+                    fontSize: 25,
+                  ),
+                ),
               ),
             ),
-            SizedBox(height: 40.0),
+            SizedBox(height: 35.0),
             Text(
               "Who is the appointment for?",
               style: TextStyle(
@@ -138,11 +136,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Column(
                           children: [
                             Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFC4C4C4),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: SizedBox(width: 60, height: 60)),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFC4C4C4),
+                                shape: BoxShape.circle,
+                              ),
+                              child: SizedBox(width: 60, height: 60),
+                            ),
                             SizedBox(height: 15),
                             Text(
                               "Johnathan",
@@ -160,28 +159,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xFF343434),
-                borderRadius: BorderRadius.circular(50.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x40000000),
-                    offset: Offset(0.0, 4.0),
-                    blurRadius: 10.0,
-                  )
-                ],
+            SizedBox(height: 10.0),
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SecondRoute()),
+                );
+              },
+              color: Color(0xFF343434),
+              shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(50.0),
               ),
-              padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("This appointment is for someone new",
-                    style: new TextStyle(
-                        color: Colors.white,
-                        decoration: TextDecoration.none,
-                        fontWeight: FontWeight.w300,
-                        fontFamily: "Open Sans",
-                        fontSize: 12)),
+                child: Text(
+                  "This appointment is for someone new",
+                  style: new TextStyle(
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: "Open Sans",
+                    fontSize: 12,
+                  ),
+                ),
               ),
             ),
           ]),
@@ -231,5 +231,21 @@ class _MyHomePageState extends State<MyHomePage> {
     //     child: Icon(Icons.add),
     //   ), // This trailing comma makes auto-formatting nicer for build methods.
     // );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Back'),
+        ),
+      ),
+    );
   }
 }
