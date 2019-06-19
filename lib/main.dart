@@ -21,14 +21,20 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
         textTheme: textTheme.copyWith(
-            headline: textTheme.headline.copyWith(
-              fontFamily: 'Jura',
-              fontWeight: FontWeight.w600,
-              fontSize: 25.0,
-            ),
-            caption: textTheme.caption.copyWith(
-              fontWeight: FontWeight.w300,
-            )),
+          headline: textTheme.headline.copyWith(
+            fontFamily: 'Jura',
+            fontWeight: FontWeight.w600,
+            fontSize: 25.0,
+          ),
+          caption: textTheme.caption.copyWith(
+            fontWeight: FontWeight.w300,
+          ),
+          title: textTheme.title.copyWith(
+            fontWeight: FontWeight.w400,
+            fontSize: 18.0,
+            color: Colors.black,
+          ),
+        ),
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -280,11 +286,68 @@ class SecondRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Back'),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 50.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Enter your 6-digit clinic code',
+                style: Theme.of(context).textTheme.title,
+              ),
+              SizedBox(height: 16.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'You can get this code by contacting your local clinic if they support the app.',
+                  style: Theme.of(context).textTheme.caption,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: 48.0),
+              TextField(
+                autocorrect: false,
+                autofocus: true,
+                textAlign: TextAlign.center,
+                textCapitalization: TextCapitalization.characters,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'X X X X X X',
+                  hintStyle: TextStyle(color: Color(0xFFCCCCCC)),
+                ),
+                style: TextStyle(
+                  fontFamily: 'Jura',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 32.0,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              RaisedButton(
+                onPressed: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => SecondRoute()),
+                  // );
+                },
+                color: Color(0xFF343434),
+                shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(50.0),
+                ),
+                child: Center(
+                  child: Text(
+                    "Continue",
+                    style: new TextStyle(
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.w300,
+                      fontFamily: "Open Sans",
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
