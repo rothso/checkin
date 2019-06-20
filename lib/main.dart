@@ -21,18 +21,27 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
         textTheme: textTheme.copyWith(
-          headline: textTheme.headline.copyWith(
+          display2: textTheme.display2.copyWith(
             fontFamily: 'Jura',
             fontWeight: FontWeight.w600,
             fontSize: 25.0,
           ),
-          caption: textTheme.caption.copyWith(
-            fontWeight: FontWeight.w300,
-          ),
-          title: textTheme.title.copyWith(
+          display1: textTheme.display1.copyWith(
             fontWeight: FontWeight.w400,
             fontSize: 18.0,
             color: Colors.black,
+          ),
+          title: textTheme.title.copyWith(
+            fontWeight: FontWeight.w400,
+            fontSize: 17.0,
+          ),
+          subhead: textTheme.subhead.copyWith(
+            fontWeight: FontWeight.w300,
+            fontSize: 14.0,
+            color: Color(0xFF626262),
+          ),
+          caption: textTheme.caption.copyWith(
+            fontWeight: FontWeight.w300,
           ),
         ),
       ),
@@ -86,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
       onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SecondRoute(),
+              builder: (context) => ClinicCodeScreen(),
             ),
           ),
       child: Scaffold(
@@ -98,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(height: 8.0),
               Text(
                 'Trifid Med',
-                style: Theme.of(context).textTheme.headline,
+                style: Theme.of(context).textTheme.display2,
               ),
               SizedBox(height: 10.0),
               Text(
@@ -281,7 +290,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class SecondRoute extends StatelessWidget {
+class ClinicCodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -293,7 +302,7 @@ class SecondRoute extends StatelessWidget {
             children: [
               Text(
                 'Enter your 6-digit clinic code',
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.display1,
               ),
               SizedBox(height: 16.0),
               Padding(
@@ -312,23 +321,26 @@ class SecondRoute extends StatelessWidget {
                 textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'X X X X X X',
-                  hintStyle: TextStyle(color: Color(0xFFCCCCCC)),
+                  hintText: 'XXXXXX',
+                  hintStyle: TextStyle(
+                    color: Color(0xFFCCCCCC),
+                  ),
                 ),
                 style: TextStyle(
                   fontFamily: 'Jura',
                   fontWeight: FontWeight.w600,
                   fontSize: 32.0,
+                  letterSpacing: 4.0,
                 ),
               ),
               SizedBox(height: 16.0),
               RaisedButton(
-                onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => SecondRoute()),
-                  // );
-                },
+                onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PersonalInfoScreen(),
+                      ),
+                    ),
                 color: Color(0xFF343434),
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
@@ -345,6 +357,66 @@ class SecondRoute extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PersonalInfoScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // appBar: AppBar(
+      //   centerTitle: true,
+
+      //   backgroundColor: Colors.white,
+      //   elevation: 0.0,
+      //   title: Text(
+      //     'Personal Info',
+      //     style: TextStyle(
+      //       color: Colors.black,
+      //     ),
+      //   ),
+      //   bottom: PreferredSize(
+      //     preferredSize: Size(0.0, 0.0),
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: [
+      //         Text(
+      //           'Let the clinic know who you are.',
+      //           style: Theme.of(context).textTheme.caption,
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(height: 20.0),
+              Text(
+                'Personal Info',
+                style: Theme.of(context).textTheme.title,
+              ),
+              SizedBox(height: 5.0),
+              Text(
+                'Let the clinic know who you are.',
+                style: Theme.of(context).textTheme.subhead,
+              ),
+              SizedBox(height: 24.0),
+              Row(
+                children: [
+                  Container(
+                    width: 75,
+                    height: 2,
+                    color: Color(0xFF3096D6),
+                  ),
+                ],
               ),
             ],
           ),
