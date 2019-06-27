@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -395,33 +396,92 @@ class PersonalInfoScreen extends StatelessWidget {
       //   ),
       // ),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(height: 20.0),
-              Text(
-                'Personal Info',
-                style: Theme.of(context).textTheme.title,
-              ),
-              SizedBox(height: 5.0),
-              Text(
-                'Let the clinic know who you are.',
-                style: Theme.of(context).textTheme.subhead,
-              ),
-              SizedBox(height: 24.0),
-              Row(
-                children: [
-                  Container(
-                    width: 75,
-                    height: 2,
-                    color: Color(0xFF3096D6),
+        child: Container(
+          decoration: BoxDecoration(color: Colors.white),
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(height: 20.0),
+                Text(
+                  'Personal Info',
+                  style: Theme.of(context).textTheme.title,
+                ),
+                SizedBox(height: 5.0),
+                Text(
+                  'Let the clinic know who you are.',
+                  style: Theme.of(context).textTheme.subhead,
+                ),
+                SizedBox(height: 24.0),
+                Row(
+                  children: [
+                    Container(
+                      width: 75,
+                      height: 2,
+                      color: Color(0xFF3096D6),
+                    ),
+                    Expanded(
+                      child: Divider(height: 1, color: Color(0xFFC9C9C9)),
+                    ),
+                  ],
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Flexible(
+                          child: new TextInput("First Name", text: "Mario")),
+                      VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
+                      Flexible(
+                        child: new TextInput("Last Name", text: "Griffin"),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
+                ),
+                new TextInput("Middle Name", text: "Antonio"),
+                new TextInput("Date of Birth", text: "June 6, 1980"),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class TextInput extends StatelessWidget {
+  final String label;
+  final String text;
+
+  const TextInput(
+    this.label, {
+    Key key,
+    this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFFE9E9E9)),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFFE9E9E9)),
+        ),
+        labelText: label,
+        labelStyle: TextStyle(
+          color: Color(0xFF888888),
+          fontWeight: FontWeight.w300,
+        ),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 13.0,
+        ),
+      ),
+      style: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.w400,
+      ),
+      controller: TextEditingController(text: text),
     );
   }
 }
