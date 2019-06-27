@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,9 +9,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+
     final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -21,11 +29,12 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.white,
         textTheme: textTheme.copyWith(
           display2: textTheme.display2.copyWith(
             fontFamily: 'Jura',
             fontWeight: FontWeight.w600,
-            fontSize: 25.0,
+            fontSize: 30.0,
           ),
           display1: textTheme.display1.copyWith(
             fontWeight: FontWeight.w400,
@@ -38,10 +47,10 @@ class MyApp extends StatelessWidget {
           ),
           subhead: textTheme.subhead.copyWith(
             fontWeight: FontWeight.w300,
-            fontSize: 14.0,
             color: Color(0xFF626262),
           ),
           caption: textTheme.caption.copyWith(
+            fontSize: 15.0,
             fontWeight: FontWeight.w300,
           ),
         ),
@@ -105,10 +114,12 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/trifidmedwhite.png', scale: 1.5),
-              SizedBox(height: 8.0),
+              SizedBox(height: 12.0),
               Text(
                 'Trifid Med',
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.display2.copyWith(
+                      color: Color(0xFF000000),
+                    ),
               ),
               SizedBox(height: 10.0),
               Text(
@@ -342,7 +353,7 @@ class ClinicCodeScreen extends StatelessWidget {
                         builder: (context) => PersonalInfoScreen(),
                       ),
                     ),
-                color: Color(0xFF343434),
+                color: Color(0xFF000000),
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
                 ),
@@ -371,75 +382,62 @@ class PersonalInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-
-      //   backgroundColor: Colors.white,
-      //   elevation: 0.0,
-      //   title: Text(
-      //     'Personal Info',
-      //     style: TextStyle(
-      //       color: Colors.black,
-      //     ),
-      //   ),
-      //   bottom: PreferredSize(
-      //     preferredSize: Size(0.0, 0.0),
-      //     child: Column(
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       children: [
-      //         Text(
-      //           'Let the clinic know who you are.',
-      //           style: Theme.of(context).textTheme.caption,
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
       body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(color: Colors.white),
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(height: 20.0),
-                Text(
-                  'Personal Info',
-                  style: Theme.of(context).textTheme.title,
-                ),
-                SizedBox(height: 5.0),
-                Text(
-                  'Let the clinic know who you are.',
-                  style: Theme.of(context).textTheme.subhead,
-                ),
-                SizedBox(height: 24.0),
-                Row(
-                  children: [
-                    Container(
-                      width: 75,
-                      height: 2,
-                      color: Color(0xFF3096D6),
+        child: Center(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Positioned(
+                    top: 7,
+                    child: BackButton(),
+                  ),
+                  Center(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20.0),
+                        Text(
+                          'Personal Info',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                        SizedBox(height: 5.0),
+                        Text(
+                          'Let the clinic know who you are.',
+                          style: Theme.of(context).textTheme.subhead.copyWith(
+                              fontSize: 13.0, fontStyle: FontStyle.italic),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Divider(height: 1, color: Color(0xFFC9C9C9)),
+                  ),
+                ],
+              ),
+              SizedBox(height: 24.0),
+              Row(
+                children: [
+                  Container(
+                    width: 75,
+                    height: 2,
+                    color: Color(0xFF3096D6),
+                  ),
+                  Expanded(
+                    child: Divider(height: 1, color: Color(0xFFC9C9C9)),
+                  ),
+                ],
+              ),
+              IntrinsicHeight(
+                child: Row(
+                  children: [
+                    Flexible(child: new TextInput("First Name", text: "Mario")),
+                    VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
+                    Flexible(
+                      child: new TextInput("Last Name", text: "Griffin"),
                     ),
                   ],
                 ),
-                IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      Flexible(
-                          child: new TextInput("First Name", text: "Mario")),
-                      VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
-                      Flexible(
-                        child: new TextInput("Last Name", text: "Griffin"),
-                      ),
-                    ],
-                  ),
-                ),
-                new TextInput("Middle Name", text: "Antonio"),
-                new TextInput("Date of Birth", text: "June 6, 1980"),
-              ],
-            ),
+              ),
+              new TextInput("Middle Name", text: "Antonio"),
+              new TextInput("Date of Birth", text: "June 6, 1980"),
+            ],
           ),
         ),
       ),
