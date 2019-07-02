@@ -45,10 +45,6 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w400,
             fontSize: 17.0,
           ),
-          subhead: textTheme.subhead.copyWith(
-            fontWeight: FontWeight.w300,
-            color: Color(0xFF626262),
-          ),
           caption: textTheme.caption.copyWith(
             fontSize: 15.0,
             fontWeight: FontWeight.w300,
@@ -403,8 +399,12 @@ class PersonalInfoScreen extends StatelessWidget {
                         SizedBox(height: 5.0),
                         Text(
                           'Let the clinic know who you are.',
-                          style: Theme.of(context).textTheme.subhead.copyWith(
-                              fontSize: 13.0, fontStyle: FontStyle.italic),
+                          style: TextStyle(
+                            color: Color(0xFF626262),
+                            fontWeight: FontWeight.w300,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13.0,
+                          ),
                         ),
                       ],
                     ),
@@ -435,12 +435,71 @@ class PersonalInfoScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              new TextInput("Middle Name", text: "Antonio"),
-              new TextInput("Date of Birth", text: "June 6, 1980"),
+              TextInput("Middle Name", text: "Antonio"),
+              TextInput("Date of Birth", text: "June 6, 1980"),
+              SexInput(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+enum Sex { male, female, other }
+
+class SexInput extends StatefulWidget {
+  @override
+  State createState() => SexInputState();
+}
+
+class SexInputState extends State<SexInput> {
+  static const sexes = {
+    'Male': Sex.male,
+    'Female': Sex.female,
+    'Other': Sex.other,
+  };
+
+  Sex _radioValue;
+
+  void _handleRadioChange(Sex value) {
+    setState(() => _radioValue = value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: Color(0xFFE9E9E9))),
+      ),
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Column(children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          alignment: AlignmentDirectional.centerStart,
+          child: Text(
+            'Sex',
+            style: TextStyle(
+              color: Color(0xFF888888),
+              fontSize: 12.0,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ),
+        for (var name in sexes.keys)
+          // TODO: replace with a custom Radio using GestureDetector
+          Container(
+            height: 35.0,
+            child: RadioListTile(
+              title: Text(name, style: TextStyle(color: Colors.black)),
+              value: sexes[name],
+              dense: false,
+              groupValue: _radioValue,
+              onChanged: _handleRadioChange,
+              controlAffinity: ListTileControlAffinity.trailing,
+            ),
+          ),
+      ]),
     );
   }
 }
