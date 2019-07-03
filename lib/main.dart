@@ -438,6 +438,8 @@ class PersonalInfoScreen extends StatelessWidget {
               TextInput("Middle Name", text: "Antonio"),
               TextInput("Date of Birth", text: "June 6, 1980"),
               SexInput(),
+              TextInput("Social Security Number (SSN)",
+                  text: "XXX-XX-XXXX", secure: true),
             ],
           ),
         ),
@@ -482,7 +484,8 @@ class SexInputState extends State<SexInput> {
             style: TextStyle(
               color: Color(0xFF888888),
               fontSize: 12.0,
-              fontWeight: FontWeight.w300,
+              height: 0.8,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ),
@@ -507,16 +510,22 @@ class SexInputState extends State<SexInput> {
 class TextInput extends StatelessWidget {
   final String label;
   final String text;
+  final bool secure;
 
   const TextInput(
     this.label, {
     Key key,
     this.text,
+    this.secure = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    final secureIcon = Image.asset("assets/secureicon.png", scale: 4);
+    final labelColor = secure ? Color(0xFF3096D6) : Color(0xFF888888);
+    final textColor = secure ? Color(0xFF3096D6) : Colors.black;
+
+    final textField = TextField(
       decoration: InputDecoration(
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Color(0xFFE9E9E9)),
@@ -526,8 +535,8 @@ class TextInput extends StatelessWidget {
         ),
         labelText: label,
         labelStyle: TextStyle(
-          color: Color(0xFF888888),
-          fontWeight: FontWeight.w300,
+          color: labelColor,
+          fontWeight: FontWeight.w400,
         ),
         contentPadding: EdgeInsets.symmetric(
           horizontal: 16.0,
@@ -535,10 +544,27 @@ class TextInput extends StatelessWidget {
         ),
       ),
       style: TextStyle(
-        color: Colors.black,
+        color: textColor,
         fontWeight: FontWeight.w400,
       ),
       controller: TextEditingController(text: text),
     );
+
+    return secure
+        ? Container(
+            color: Color(0xFFF5FAFD),
+            child: Stack(
+              children: [
+                textField,
+                Positioned(
+                  right: 10,
+                  top: 0,
+                  bottom: 0,
+                  child: secureIcon,
+                ),
+              ],
+            ),
+          )
+        : textField;
   }
 }
