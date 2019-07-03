@@ -443,7 +443,11 @@ class PersonalInfoScreen extends StatelessWidget {
                     ),
                     TextInput("Middle Name", text: "Ben"),
                     TextInput("Date of Birth", text: "June 6, 1980"),
-                    SexInput(),
+                    RadioInput("Sex", {
+                      'Male': Sex.male,
+                      'Female': Sex.female,
+                      'Other': Sex.other,
+                    }),
                     TextInput(
                       "Social Security Number (SSN)",
                       text: "XXX-XX-XXXX",
@@ -467,6 +471,32 @@ class PersonalInfoScreen extends StatelessWidget {
                       "Relationship to Emergency Contact",
                       text: "Brother",
                     ),
+                    ListHeader("DEMOGRAPHICS"),
+                    RadioInput("Race", {
+                      'African-America': Race.africanAmerican,
+                      'Asian': Race.asian,
+                      'Hispanic': Race.hispanic,
+                      'Native American': Race.nativeAmerican,
+                      'White': Race.white,
+                      'Other': Race.other,
+                    }),
+                    RadioInput("Ethnicity", {
+                      'American Indian or Alaskan Native': Ethnicity.native,
+                      'Asian': Ethnicity.asian,
+                      'Black or African American': Ethnicity.black,
+                      'Hispanic or Latino': Ethnicity.hispanic,
+                      'Native Hawaiian or Other Pacific Islander': Ethnicity.pacific,
+                      'White': Ethnicity.white,
+                    }),
+                    RadioInput("Marital Status", {
+                      'Married': Marital.married,
+                      'Single': Marital.single,
+                      'Divorced': Marital.divorced,
+                      'Separated': Marital.separated,
+                      'Widowed': Marital.widowed,
+                      'Partnered': Marital.partnered,
+                    }),
+                    SizedBox(height: 16.0), // temporary
                   ],
                 ),
               ),
@@ -558,22 +588,25 @@ class AddressInput extends StatelessWidget {
 }
 
 enum Sex { male, female, other }
+enum Race { africanAmerican, asian, hispanic, nativeAmerican, white, other }
+enum Ethnicity { native, asian, black, hispanic, pacific, white }
+enum Marital { married, single, divorced, separated, widowed, partnered }
 
-class SexInput extends StatefulWidget {
+class RadioInput extends StatefulWidget {
+  final label;
+  final options;
+
+  RadioInput(this.label, this.options);
+
   @override
-  State createState() => SexInputState();
+  State createState() => RadioInputState();
 }
 
-class SexInputState extends State<SexInput> {
-  static const sexes = {
-    'Male': Sex.male,
-    'Female': Sex.female,
-    'Other': Sex.other,
-  };
+// TODO: generify, introduce static types
+class RadioInputState extends State<RadioInput> {
+  var _radioValue;
 
-  Sex _radioValue;
-
-  void _handleRadioChange(Sex value) {
+  void _handleRadioChange(var value) {
     setState(() => _radioValue = value);
   }
 
@@ -596,17 +629,17 @@ class SexInputState extends State<SexInput> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
-              'Sex',
+              widget.label,
               style: labelStyle,
             ),
           ),
-          for (var name in sexes.keys)
+          for (var name in widget.options.keys)
             // TODO: replace with a custom Radio using GestureDetector
             Container(
               height: 35.0,
               child: RadioListTile(
                 title: Text(name, style: TextStyle(color: Colors.black)),
-                value: sexes[name],
+                value: widget.options[name],
                 dense: false,
                 groupValue: _radioValue,
                 onChanged: _handleRadioChange,
