@@ -440,9 +440,67 @@ class PersonalInfoScreen extends StatelessWidget {
               SexInput(),
               TextInput("Social Security Number (SSN)",
                   text: "XXX-XX-XXXX", secure: true),
+              AddressInput(),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class AddressInput extends StatelessWidget {
+  const AddressInput({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: Color(0xFFE9E9E9))),
+      ),
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Address',
+            style: Theme.of(context).textTheme.subhead.copyWith(
+                  color: Color(0xFF888888),
+                  fontSize: 12.0,
+                  height: 0.8,
+                ),
+          ),
+          SizedBox(height: 10.0),
+          Card(
+            elevation: 3.0,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    '814 Lasalle St.',
+                    style: TextStyle(
+                      letterSpacing: -0.41,
+                      fontSize: 17.0,
+                    ),
+                  ),
+                  Text(
+                    'Jacksonville, Florida 32207',
+                    style: TextStyle(
+                      letterSpacing: -0.41,
+                      color: Color(0xFF50555C),
+                      fontSize: 15.0,
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -470,39 +528,42 @@ class SexInputState extends State<SexInput> {
 
   @override
   Widget build(BuildContext context) {
+    final labelStyle = Theme.of(context).textTheme.subhead.copyWith(
+          color: Color(0xFF888888),
+          fontSize: 12.0,
+          height: 0.8,
+        );
+
     return Container(
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: Color(0xFFE9E9E9))),
       ),
       padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Column(children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          alignment: AlignmentDirectional.centerStart,
-          child: Text(
-            'Sex',
-            style: TextStyle(
-              color: Color(0xFF888888),
-              fontSize: 12.0,
-              height: 0.8,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
-        for (var name in sexes.keys)
-          // TODO: replace with a custom Radio using GestureDetector
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
           Container(
-            height: 35.0,
-            child: RadioListTile(
-              title: Text(name, style: TextStyle(color: Colors.black)),
-              value: sexes[name],
-              dense: false,
-              groupValue: _radioValue,
-              onChanged: _handleRadioChange,
-              controlAffinity: ListTileControlAffinity.trailing,
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(
+              'Sex',
+              style: labelStyle,
             ),
           ),
-      ]),
+          for (var name in sexes.keys)
+            // TODO: replace with a custom Radio using GestureDetector
+            Container(
+              height: 35.0,
+              child: RadioListTile(
+                title: Text(name, style: TextStyle(color: Colors.black)),
+                value: sexes[name],
+                dense: false,
+                groupValue: _radioValue,
+                onChanged: _handleRadioChange,
+                controlAffinity: ListTileControlAffinity.trailing,
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
