@@ -424,23 +424,35 @@ class PersonalInfoScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              IntrinsicHeight(
-                child: Row(
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
                   children: [
-                    Flexible(child: new TextInput("First Name", text: "Mario")),
-                    VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
-                    Flexible(
-                      child: new TextInput("Last Name", text: "Griffin"),
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: new TextInput("First Name", text: "Peter"),
+                          ),
+                          VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
+                          Flexible(
+                            child: new TextInput("Last Name", text: "Parker"),
+                          ),
+                        ],
+                      ),
                     ),
+                    TextInput("Middle Name", text: "Ben"),
+                    TextInput("Date of Birth", text: "June 6, 1980"),
+                    SexInput(),
+                    TextInput("Social Security Number (SSN)",
+                        text: "XXX-XX-XXXX", secure: true),
+                    AddressInput(),
+                    TextInput("Phone Number",
+                        text: "(904) 555-1234", phone: true),
+                    TextInput("Email (optional)", text: "parker.p@gmail.com"),
                   ],
                 ),
               ),
-              TextInput("Middle Name", text: "Antonio"),
-              TextInput("Date of Birth", text: "June 6, 1980"),
-              SexInput(),
-              TextInput("Social Security Number (SSN)",
-                  text: "XXX-XX-XXXX", secure: true),
-              AddressInput(),
             ],
           ),
         ),
@@ -572,12 +584,14 @@ class TextInput extends StatelessWidget {
   final String label;
   final String text;
   final bool secure;
+  final bool phone;
 
   const TextInput(
     this.label, {
     Key key,
     this.text,
     this.secure = false,
+    this.phone = false,
   }) : super(key: key);
 
   @override
@@ -603,6 +617,8 @@ class TextInput extends StatelessWidget {
           horizontal: 16.0,
           vertical: 13.0,
         ),
+        prefixText: phone ? "🇺🇸  " : null,
+        prefixStyle: TextStyle(color: Colors.black),
       ),
       style: TextStyle(
         color: textColor,
