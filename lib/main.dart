@@ -444,18 +444,57 @@ class PersonalInfoScreen extends StatelessWidget {
                     TextInput("Middle Name", text: "Ben"),
                     TextInput("Date of Birth", text: "June 6, 1980"),
                     SexInput(),
-                    TextInput("Social Security Number (SSN)",
-                        text: "XXX-XX-XXXX", secure: true),
+                    TextInput(
+                      "Social Security Number (SSN)",
+                      text: "XXX-XX-XXXX",
+                      secure: true,
+                    ),
                     AddressInput(),
-                    TextInput("Phone Number",
-                        text: "(904) 555-1234", phone: true),
+                    TextInput(
+                      "Phone Number",
+                      text: "(904) 555-1234",
+                      phone: true,
+                    ),
                     TextInput("Email (optional)", text: "parker.p@gmail.com"),
+                    ListHeader("EMERGENCY CONTACT"),
+                    TextInput("Emergency Contact Name", text: "Ned Leeds"),
+                    TextInput(
+                      "Emergency Contact Phone Number",
+                      text: "(904) 555-1235",
+                      phone: true,
+                    ),
+                    TextInput(
+                      "Relationship to Emergency Contact",
+                      text: "Brother",
+                    ),
                   ],
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ListHeader extends StatelessWidget {
+  final String title;
+
+  const ListHeader(
+    this.title, {
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Color(0xFFF0F0F0),
+      padding: EdgeInsets.all(20),
+      alignment: AlignmentDirectional.center,
+      child: Text(
+        title,
+        style: TextStyle(color: Color(0xFF929292)),
       ),
     );
   }
