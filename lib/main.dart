@@ -415,7 +415,7 @@ class PersonalInfoScreen extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    width: 75,
+                    width: MediaQuery.of(context).size.width * 0.33,
                     height: 2,
                     color: Color(0xFF3096D6),
                   ),
@@ -498,7 +498,152 @@ class PersonalInfoScreen extends StatelessWidget {
                       'Partnered': Marital.partnered,
                     }),
                     SliderInput("Gross Annual Income"),
-                    SizedBox(height: 16.0), // temporary
+                    Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: RaisedButton(
+                        onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => InsuranceScreen(),
+                              ),
+                            ),
+                        color: Color(0xFF3096D6),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(5.0),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.all(13.0),
+                          child: Text(
+                            "Next Step: Billing & Insurance",
+                            style: new TextStyle(
+                              color: Colors.white,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Open Sans",
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ), //
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class InsuranceScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Positioned(
+                    top: 7,
+                    child: BackButton(),
+                  ),
+                  Center(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20.0),
+                        Text(
+                          'Billing & Insurance',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                        SizedBox(height: 5.0),
+                        Text(
+                          'Let the clinic know your insurance plan.',
+                          style: TextStyle(
+                            color: Color(0xFF626262),
+                            fontWeight: FontWeight.w300,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 24.0),
+              Row(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.66,
+                    height: 2,
+                    color: Color(0xFF3096D6),
+                  ),
+                  Expanded(
+                    child: Divider(height: 1, color: Color(0xFFC9C9C9)),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    new TextInput(
+                      "Insurance Company Name",
+                      text: "Florida Blue",
+                    ),
+                    new TextInput(
+                      "Insurance Company Phone Number",
+                      text: "(904) 555-1236",
+                      phone: true,
+                    ),
+                    new TextInput(
+                      "Policy Holder First Name",
+                      text: "Peter",
+                    ),
+                    new TextInput(
+                      "Policy Holder Last Name",
+                      text: "Parker",
+                    ),
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: new TextInput("Policy Number", text: "1234"),
+                          ),
+                          VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
+                          Flexible(
+                            child: new TextInput("Group Number", text: "5432"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: RaisedButton(
+                        onPressed: () => {},
+                        color: Color(0xFF3096D6),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(5.0),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.all(13.0),
+                          child: Text(
+                            "Next Step: Medical History",
+                            style: new TextStyle(
+                              color: Colors.white,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Open Sans",
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ), //
+                    ),
                   ],
                 ),
               ),
