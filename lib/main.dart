@@ -485,7 +485,8 @@ class PersonalInfoScreen extends StatelessWidget {
                       'Asian': Ethnicity.asian,
                       'Black or African American': Ethnicity.black,
                       'Hispanic or Latino': Ethnicity.hispanic,
-                      'Native Hawaiian or Other Pacific Islander': Ethnicity.pacific,
+                      'Native Hawaiian or Other Pacific Islander':
+                          Ethnicity.pacific,
                       'White': Ethnicity.white,
                     }),
                     RadioInput("Marital Status", {
@@ -496,6 +497,7 @@ class PersonalInfoScreen extends StatelessWidget {
                       'Widowed': Marital.widowed,
                       'Partnered': Marital.partnered,
                     }),
+                    SliderInput("Gross Annual Income"),
                     SizedBox(height: 16.0), // temporary
                   ],
                 ),
@@ -581,6 +583,78 @@ class AddressInput extends StatelessWidget {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class SliderInput extends StatefulWidget {
+  final String label;
+
+  SliderInput(this.label);
+
+  @override
+  State createState() => SliderInputState();
+}
+
+class SliderInputState extends State<SliderInput> {
+  double _sliderValue = 125000.0;
+
+  void _handleSliderChange(double value) {
+    setState(() => _sliderValue = value);
+  }
+
+  String _stringValue() {
+    var income = _sliderValue.toStringAsFixed(0).replaceAllMapped(
+        new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+    return _sliderValue > 0 ? "\$$income+" : "Prefer not to say";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final labelStyle = Theme.of(context).textTheme.subhead.copyWith(
+          color: Color(0xFF888888),
+          fontSize: 12.0,
+          height: 0.8,
+        );
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: Color(0xFFE9E9E9))),
+      ),
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  widget.label,
+                  style: labelStyle,
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  _stringValue(),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Slider(
+            min: 0,
+            max: 250000,
+            divisions: 10,
+            onChanged: _handleSliderChange,
+            value: _sliderValue,
+          )
         ],
       ),
     );
