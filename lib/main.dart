@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() => runApp(MyApp());
 
@@ -624,7 +625,12 @@ class InsuranceScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(16.0),
                       child: RaisedButton(
-                        onPressed: () => {},
+                        onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MedicalHistoryScreen(),
+                              ),
+                            ),
                         color: Color(0xFF3096D6),
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(5.0),
@@ -649,6 +655,189 @@ class InsuranceScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class MedicalHistoryScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Positioned(
+                    top: 7,
+                    child: BackButton(),
+                  ),
+                  Center(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20.0),
+                        Text(
+                          'Medical History',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                        SizedBox(height: 5.0),
+                        Text(
+                          'Descibe your allergies and medical history.',
+                          style: TextStyle(
+                            color: Color(0xFF626262),
+                            fontWeight: FontWeight.w300,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 24.0),
+              Row(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 1,
+                    height: 2,
+                    color: Color(0xFF3096D6),
+                  ),
+                  Expanded(
+                    child: Divider(height: 1, color: Color(0xFFC9C9C9)),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    AllergyInput(),
+                    Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: RaisedButton(
+                        onPressed: () => {},
+                        color: Color(0xFF3096D6),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(5.0),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.all(13.0),
+                          child: Text(
+                            "Next Step: Symptoms",
+                            style: new TextStyle(
+                              color: Colors.white,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Open Sans",
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ), //
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AllergyInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Allergies',
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    letterSpacing: -0.41,
+                  ),
+                ),
+                SizedBox(height: 3.0),
+                Text(
+                  'List any medications, food, etc. you are allergic to.',
+                  style: TextStyle(
+                    color: Color(0xFF929292),
+                    fontSize: 15.0,
+                    letterSpacing: -0.41,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10.0),
+          DetailCard(title: "Peanut", subtitle: "Strong reaction"),
+          SizedBox(height: 10.0),
+          DetailCard(title: "Vitamin D", subtitle: "Mild reaction"),
+        ],
+      ),
+    );
+  }
+}
+
+class DetailCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String caption;
+
+  const DetailCard({
+    Key key,
+    @required this.title,
+    @required this.subtitle,
+    this.caption,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 3.0,
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                letterSpacing: -0.41,
+                fontSize: 17.0,
+              ),
+            ),
+            SizedBox(width: 14.0),
+            Expanded(
+              child: Text(
+                subtitle,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  letterSpacing: -0.41,
+                  color: Color(0xFF50555C),
+                  fontSize: 15.0,
+                  height: 1.3,
+                ),
+              ),
+            ),
+            Icon(
+              FontAwesomeIcons.pen,
+              size: 14.0,
+              color: Color(0xFF929292),
+            ),
+          ],
         ),
       ),
     );
