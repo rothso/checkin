@@ -798,6 +798,11 @@ class MedicalHistoryScreen extends StatelessWidget {
                           'List any conditions you have or have had in the past',
                       noIcon: true,
                       children: [
+                        SearchBar(
+                          controller: TextEditingController(),
+                          focusNode: FocusNode(),
+                        ),
+                        SizedBox(height: 12.0),
                         ConditionsInput(),
                       ],
                     ),
@@ -835,6 +840,54 @@ class MedicalHistoryScreen extends StatelessWidget {
   }
 }
 
+class SearchBar extends StatelessWidget {
+  const SearchBar({
+    @required this.controller,
+    @required this.focusNode,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Color(0xFFF1F1F1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            const Icon(
+              CupertinoIcons.search,
+              color: Color(0xFF8E8E8E),
+            ),
+            Expanded(
+              child: CupertinoTextField(
+                decoration: BoxDecoration(border: null),
+                controller: controller,
+                focusNode: focusNode,
+                placeholder: "Search",
+                placeholderStyle: TextStyle(
+                  color: Color(0xFFC9C9C9),
+                ),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 17.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class ConditionsInput extends StatefulWidget {
   @override
   State createState() => ConditionsInputState();
@@ -858,7 +911,11 @@ class ConditionsInputState extends State<ConditionsInput> {
     "Tuberculosis"
   ];
 
-  final List<String> _selected = [];
+  final List<String> _selected = [
+    "Arthritis",
+    "Heart Attack",
+    "Liver Disease",
+  ];
 
   void _handleOnSelected(String condition) {
     setState(() => _selected.contains(condition)
