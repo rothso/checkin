@@ -733,7 +733,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 32.0),
                     DetailListInput(
                       title: "Medications",
                       subtitle: "List all the medications you are taking",
@@ -752,7 +752,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 16.0),
                     Row(
                       children: [
                         Expanded(
@@ -806,6 +806,20 @@ class MedicalHistoryScreen extends StatelessWidget {
                         ConditionsInput(),
                       ],
                     ),
+                    SizedBox(height: 32.0),
+                    DetailListInput(
+                      title: "Surgical History",
+                      subtitle: "List any surgeries you have had in the past",
+                      children: [
+                        SizedBox(height: 10.0),
+                        DetailCard(
+                          title: "Knee Surgey",
+                          subtitle: "2002",
+                          caption: "Baptist Medical Center (Jacksonville)",
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
                     Padding(
                       padding: EdgeInsets.all(16.0),
                       child: RaisedButton(
@@ -1023,7 +1037,7 @@ class DetailListInput extends StatelessWidget {
   DetailListInput({
     @required this.title,
     @required this.subtitle,
-    this.noIcon = true,
+    this.noIcon = false,
     this.children = const [],
   });
 
