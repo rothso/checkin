@@ -731,11 +731,6 @@ class MedicalHistoryScreen extends StatelessWidget {
                           title: "Vitamin D",
                           subtitle: "Mild reaction",
                         ),
-                        DetailCard(
-                          title: "Aspirin",
-                          subtitle: "10mg",
-                          caption: "2 tablets twice daily",
-                        ),
                       ],
                     ),
                     SizedBox(height: 20.0),
@@ -796,6 +791,16 @@ class MedicalHistoryScreen extends StatelessWidget {
                       title: 'MMR (Measles, Mumps, Rubella)',
                       year: '2001',
                     ),
+                    SizedBox(height: 32.0),
+                    DetailListInput(
+                      title: 'Conditions',
+                      subtitle:
+                          'List any conditions you have or have had in the past',
+                      noIcon: true,
+                      children: [
+                        ConditionsInput(),
+                      ],
+                    ),
                     Padding(
                       padding: EdgeInsets.all(16.0),
                       child: RaisedButton(
@@ -825,6 +830,74 @@ class MedicalHistoryScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ConditionsInput extends StatefulWidget {
+  @override
+  State createState() => ConditionsInputState();
+}
+
+class ConditionsInputState extends State<ConditionsInput> {
+  static const List<String> _conditions = [
+    "Anxiety Disorder",
+    "Arthritis",
+    "Athsma",
+    "Blood Clots",
+    "Cancer",
+    "Claustrophobia",
+    "Diabetes",
+    "Dialysis",
+    "Heart Attack",
+    "High Blood Pressure",
+    "Overactive Thyroid",
+    "Liver Disease",
+    "Stroke",
+    "Tuberculosis"
+  ];
+
+  final List<String> _selected = [];
+
+  void _handleOnSelected(String condition) {
+    setState(() => _selected.contains(condition)
+        ? _selected.remove(condition)
+        : _selected.add(condition));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        chipTheme: Theme.of(context).chipTheme.copyWith(
+              secondarySelectedColor: Color(0xFF3096D6),
+              backgroundColor: Colors.white,
+              padding: EdgeInsets.all(8.0),
+              labelStyle: TextStyle(color: Color(0xFF626262), fontSize: 15.0),
+              secondaryLabelStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 15.0,
+              ),
+            ),
+      ),
+      child: Wrap(
+        spacing: 8.0,
+        children: [
+          for (var choice in _conditions)
+            ChoiceChip(
+              label: Text(choice),
+              selected: _selected.contains(choice),
+              onSelected: (selected) => _handleOnSelected(choice),
+              shape: StadiumBorder(
+                side: BorderSide(
+                  color: _selected.contains(choice)
+                      ? Color(0xFF3096D6)
+                      : Color(0xFFCECECE),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -888,10 +961,12 @@ class DetailListInput extends StatelessWidget {
   final List<Widget> children;
   final String title;
   final String subtitle;
+  final bool noIcon;
 
   DetailListInput({
     @required this.title,
     @required this.subtitle,
+    this.noIcon = true,
     this.children = const [],
   });
 
@@ -928,14 +1003,15 @@ class DetailListInput extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 2.0),
-                  child: Icon(
-                    FontAwesomeIcons.plusCircle,
-                    size: 24.0,
-                    color: Color(0xFF3096D6),
+                if (!noIcon)
+                  Padding(
+                    padding: EdgeInsets.only(right: 2.0),
+                    child: Icon(
+                      FontAwesomeIcons.plusCircle,
+                      size: 24.0,
+                      color: Color(0xFF3096D6),
+                    ),
                   ),
-                ),
               ],
             ),
           ),
