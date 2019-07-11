@@ -100,11 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return GestureDetector(
       onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ClinicCodeScreen(),
-            ),
-          ),
+        context,
+        MaterialPageRoute(
+          builder: (context) => ClinicCodeScreen(),
+        ),
+      ),
       child: Scaffold(
         body: Center(
           child: Column(
@@ -345,11 +345,11 @@ class ClinicCodeScreen extends StatelessWidget {
               SizedBox(height: 16.0),
               RaisedButton(
                 onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PersonalInfoScreen(),
-                      ),
-                    ),
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PersonalInfoScreen(),
+                  ),
+                ),
                 color: Color(0xFF000000),
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
@@ -433,11 +433,11 @@ class PersonalInfoScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Flexible(
-                            child: new TextInput("First Name", text: "Peter"),
+                            child: TextInput("First Name", text: "Peter"),
                           ),
                           VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
                           Flexible(
-                            child: new TextInput("Last Name", text: "Parker"),
+                            child: TextInput("Last Name", text: "Parker"),
                           ),
                         ],
                       ),
@@ -503,11 +503,11 @@ class PersonalInfoScreen extends StatelessWidget {
                       padding: EdgeInsets.all(16.0),
                       child: RaisedButton(
                         onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => InsuranceScreen(),
-                              ),
-                            ),
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => InsuranceScreen(),
+                          ),
+                        ),
                         color: Color(0xFF3096D6),
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(5.0),
@@ -626,11 +626,11 @@ class InsuranceScreen extends StatelessWidget {
                       padding: EdgeInsets.all(16.0),
                       child: RaisedButton(
                         onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MedicalHistoryScreen(),
-                              ),
-                            ),
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MedicalHistoryScreen(),
+                          ),
+                        ),
                         color: Color(0xFF3096D6),
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(5.0),
@@ -738,7 +738,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 30.0),
+                    SizedBox(height: 20.0),
                     DetailListInput(
                       title: "Medications",
                       subtitle: "List all the medications you are taking",
@@ -756,6 +756,45 @@ class MedicalHistoryScreen extends StatelessWidget {
                           caption: "1 tablet once daily",
                         ),
                       ],
+                    ),
+                    SizedBox(height: 10.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Text(
+                              'Immunizations',
+                              style: TextStyle(
+                                fontSize: 17.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text(
+                                'Year',
+                                style: TextStyle(
+                                  fontSize: 17.0,
+                                  color: Color(0xFFA1A1A1),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Divider(height: 1, color: Color(0xFFC9C9C9)),
+                    YearInput(title: 'Chicken Pox', year: '1998'),
+                    YearInput(title: 'Hepatitis A', year: '1989'),
+                    YearInput(
+                      title: 'MMR (Measles, Mumps, Rubella)',
+                      year: '2001',
                     ),
                     Padding(
                       padding: EdgeInsets.all(16.0),
@@ -778,7 +817,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ), //
+                      ),
                     ),
                   ],
                 ),
@@ -786,6 +825,60 @@ class MedicalHistoryScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class YearInput extends StatelessWidget {
+  final String title;
+  final String year;
+
+  const YearInput({
+    Key key,
+    @required this.title,
+    @required this.year,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 3,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Color(0xFFE9E9E9),
+                  ),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 13.0,
+              ),
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: Color(0xFF888888),
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+          ),
+          VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
+          Expanded(
+            flex: 1,
+            child: TextInput(
+              null,
+              text: year,
+              centered: true,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -810,7 +903,7 @@ class DetailListInput extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: EdgeInsets.all(12.0),
+            padding: EdgeInsets.only(bottom: 12.0),
             child: Row(
               children: [
                 Expanded(
@@ -821,7 +914,6 @@ class DetailListInput extends StatelessWidget {
                         title,
                         style: TextStyle(
                           fontSize: 17.0,
-                          letterSpacing: -0.41,
                         ),
                       ),
                       SizedBox(height: 3.0),
@@ -913,8 +1005,9 @@ class DetailCard extends StatelessWidget {
                       style: TextStyle(
                         letterSpacing: -0.41,
                         color: Color(0xFF50555C),
+                        fontWeight: FontWeight.w300,
                         fontSize: 15.0,
-                        height: 1.5,
+                        height: 1.3,
                       ),
                     ),
                   ),
@@ -1148,6 +1241,7 @@ class TextInput extends StatelessWidget {
   final String text;
   final bool secure;
   final bool phone;
+  final bool centered;
 
   const TextInput(
     this.label, {
@@ -1155,6 +1249,7 @@ class TextInput extends StatelessWidget {
     this.text,
     this.secure = false,
     this.phone = false,
+    this.centered = false,
   }) : super(key: key);
 
   @override
@@ -1164,6 +1259,7 @@ class TextInput extends StatelessWidget {
     final textColor = secure ? Color(0xFF3096D6) : Colors.black;
 
     final textField = TextField(
+      textAlign: centered ? TextAlign.center : TextAlign.start,
       decoration: InputDecoration(
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Color(0xFFE9E9E9)),
