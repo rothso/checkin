@@ -715,7 +715,48 @@ class MedicalHistoryScreen extends StatelessWidget {
                 child: ListView(
                   shrinkWrap: true,
                   children: [
-                    AllergyInput(),
+                    SizedBox(height: 16.0),
+                    DetailListInput(
+                      title: "Allergies",
+                      subtitle:
+                          "List any medications, food, etc. you are allergic to",
+                      children: [
+                        SizedBox(height: 10.0),
+                        DetailCard(
+                          title: "Peanut",
+                          subtitle: "Strong reaction",
+                        ),
+                        SizedBox(height: 10.0),
+                        DetailCard(
+                          title: "Vitamin D",
+                          subtitle: "Mild reaction",
+                        ),
+                        DetailCard(
+                          title: "Aspirin",
+                          subtitle: "10mg",
+                          caption: "2 tablets twice daily",
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30.0),
+                    DetailListInput(
+                      title: "Medications",
+                      subtitle: "List all the medications you are taking",
+                      children: [
+                        SizedBox(height: 10.0),
+                        DetailCard(
+                          title: "Aspirin",
+                          subtitle: "10mg",
+                          caption: "2 tablets twice daily",
+                        ),
+                        SizedBox(height: 10.0),
+                        DetailCard(
+                          title: "Vitamin B",
+                          subtitle: "10mg",
+                          caption: "1 tablet once daily",
+                        ),
+                      ],
+                    ),
                     Padding(
                       padding: EdgeInsets.all(16.0),
                       child: RaisedButton(
@@ -750,42 +791,63 @@ class MedicalHistoryScreen extends StatelessWidget {
   }
 }
 
-class AllergyInput extends StatelessWidget {
+class DetailListInput extends StatelessWidget {
+  final List<Widget> children;
+  final String title;
+  final String subtitle;
+
+  DetailListInput({
+    @required this.title,
+    @required this.subtitle,
+    this.children = const [],
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
             padding: EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: Row(
               children: [
-                Text(
-                  'Allergies',
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    letterSpacing: -0.41,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          letterSpacing: -0.41,
+                        ),
+                      ),
+                      SizedBox(height: 3.0),
+                      Text(
+                        subtitle,
+                        style: TextStyle(
+                          color: Color(0xFF929292),
+                          fontSize: 15.0,
+                          letterSpacing: -0.41,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 3.0),
-                Text(
-                  'List any medications, food, etc. you are allergic to.',
-                  style: TextStyle(
-                    color: Color(0xFF929292),
-                    fontSize: 15.0,
-                    letterSpacing: -0.41,
+                Padding(
+                  padding: EdgeInsets.only(right: 2.0),
+                  child: Icon(
+                    FontAwesomeIcons.plusCircle,
+                    size: 24.0,
+                    color: Color(0xFF3096D6),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 10.0),
-          DetailCard(title: "Peanut", subtitle: "Strong reaction"),
-          SizedBox(height: 10.0),
-          DetailCard(title: "Vitamin D", subtitle: "Mild reaction"),
+          ...children,
         ],
       ),
     );
@@ -810,33 +872,54 @@ class DetailCard extends StatelessWidget {
       elevation: 3.0,
       child: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Row(
+        child: Column(
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                letterSpacing: -0.41,
-                fontSize: 17.0,
-              ),
-            ),
-            SizedBox(width: 14.0),
-            Expanded(
-              child: Text(
-                subtitle,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  letterSpacing: -0.41,
-                  color: Color(0xFF50555C),
-                  fontSize: 15.0,
-                  height: 1.3,
+            Row(
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    letterSpacing: -0.41,
+                    fontSize: 17.0,
+                  ),
                 ),
+                SizedBox(width: 14.0),
+                Expanded(
+                  child: Text(
+                    subtitle,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      letterSpacing: -0.41,
+                      color: Color(0xFF50555C),
+                      fontSize: 15.0,
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+                Icon(
+                  FontAwesomeIcons.pen,
+                  size: 14.0,
+                  color: Color(0xFF929292),
+                ),
+              ],
+            ),
+            if (caption != null)
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      caption,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        letterSpacing: -0.41,
+                        color: Color(0xFF50555C),
+                        fontSize: 15.0,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Icon(
-              FontAwesomeIcons.pen,
-              size: 14.0,
-              color: Color(0xFF929292),
-            ),
           ],
         ),
       ),
