@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:myapp/styles.dart';
 
 void main() => runApp(MyApp());
 
@@ -128,174 +129,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
-
-    // return Scaffold(
-    //   body: Center(
-    //     child: Container(
-    //       color: Colors.white,
-    //       alignment: AlignmentDirectional(0.0, -0.7),
-    //       child: Container(
-    //         margin: EdgeInsets.symmetric(vertical: 80.0, horizontal: 40.0),
-    //         child: Column(children: [
-    //           Image.asset("assets/hospital.png", scale: 3),
-    //           SizedBox(height: 40.0),
-    //           RichText(
-    //             text: TextSpan(
-    //               // Note: Styles for TextSpans must be explicitly defined.
-    //               // Child text spans will inherit styles from parent
-    //               style: TextStyle(fontSize: 12.0, color: Color(0xFF666666)),
-    //               children: [
-    //                 TextSpan(
-    //                   text: 'You are checking into ',
-    //                   style: TextStyle(fontStyle: FontStyle.italic),
-    //                 ),
-    //                 TextSpan(
-    //                   text: 'West Haven Clinic',
-    //                   style: TextStyle(fontWeight: FontWeight.w500),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //           SizedBox(height: 15.0),
-    //           Container(
-    //             decoration: BoxDecoration(
-    //               color: Color(0xFF3096D6),
-    //               borderRadius: BorderRadius.circular(50.0),
-    //             ),
-    //             padding: EdgeInsets.all(10.0),
-    //             child: Center(
-    //               child: Text(
-    //                 "7HAT46",
-    //                 style: new TextStyle(
-    //                   color: Colors.white,
-    //                   letterSpacing: 6.0,
-    //                   decoration: TextDecoration.none,
-    //                   fontWeight: FontWeight.normal,
-    //                   fontFamily: "Jura",
-    //                   fontSize: 25,
-    //                 ),
-    //               ),
-    //             ),
-    //           ),
-    //           SizedBox(height: 35.0),
-    //           Text(
-    //             "Who is the appointment for?",
-    //             style: TextStyle(
-    //               fontSize: 12.0,
-    //               color: Color(0xFF666666),
-    //               decoration: TextDecoration.none,
-    //               fontStyle: FontStyle.italic,
-    //               fontFamily: "Open Sans",
-    //               fontWeight: FontWeight.w400,
-    //             ),
-    //           ),
-    //           SizedBox(height: 20.0),
-    //           Container(
-    //             margin: EdgeInsets.symmetric(horizontal: 20.0),
-    //             child: Row(
-    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //               children: List.generate(
-    //                 3,
-    //                 (index) => Expanded(
-    //                       child: Column(
-    //                         children: [
-    //                           Container(
-    //                             decoration: BoxDecoration(
-    //                               color: Color(0xFFC4C4C4),
-    //                               shape: BoxShape.circle,
-    //                             ),
-    //                             child: SizedBox(width: 60, height: 60),
-    //                           ),
-    //                           SizedBox(height: 15),
-    //                           Text(
-    //                             "Johnathan",
-    //                             style: TextStyle(
-    //                               fontSize: 12.0,
-    //                               color: Color(0xFF000000),
-    //                               decoration: TextDecoration.none,
-    //                               fontFamily: "Open Sans",
-    //                               fontWeight: FontWeight.normal,
-    //                             ),
-    //                           ),
-    //                         ],
-    //                       ),
-    //                     ),
-    //               ),
-    //             ),
-    //           ),
-    //           SizedBox(height: 10.0),
-    //           RaisedButton(
-    //             onPressed: () {
-    //               Navigator.push(
-    //                 context,
-    //                 MaterialPageRoute(builder: (context) => SecondRoute()),
-    //               );
-    //             },
-    //             color: Color(0xFF343434),
-    //             shape: RoundedRectangleBorder(
-    //               borderRadius: new BorderRadius.circular(50.0),
-    //             ),
-    //             child: Center(
-    //               child: Text(
-    //                 "This appointment is for someone new",
-    //                 style: new TextStyle(
-    //                   color: Colors.white,
-    //                   decoration: TextDecoration.none,
-    //                   fontWeight: FontWeight.w300,
-    //                   fontFamily: "Open Sans",
-    //                   fontSize: 12,
-    //                 ),
-    //               ),
-    //             ),
-    //           ),
-    //         ]),
-    //       ),
-    //     ),
-    //   ),
-    // );
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     // Here we take the value from the MyHomePage object that was created by
-    //     // the App.build method, and use it to set our appbar title.
-    //     title: Text(widget.title),
-    //   ),
-    //   body: Center(
-    //     // Center is a layout widget. It takes a single child and positions it
-    //     // in the middle of the parent.
-    //     child: Column(
-    //       // Column is also layout widget. It takes a list of children and
-    //       // arranges them vertically. By default, it sizes itself to fit its
-    //       // children horizontally, and tries to be as tall as its parent.
-    //       //
-    //       // Invoke "debug painting" (press "p" in the console, choose the
-    //       // "Toggle Debug Paint" action from the Flutter Inspector in Android
-    //       // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-    //       // to see the wireframe for each widget.
-    //       //
-    //       // Column has various properties to control how it sizes itself and
-    //       // how it positions its children. Here we use mainAxisAlignment to
-    //       // center the children vertically; the main axis here is the vertical
-    //       // axis because Columns are vertical (the cross axis would be
-    //       // horizontal).
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: <Widget>[
-    //         Text(
-    //           'You have pushed the button this many times!:',
-    //         ),
-    //         Text(
-    //           '$_counter',
-    //           style: Theme.of(context).textTheme.display1,
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    //   floatingActionButton: FloatingActionButton(
-    //     onPressed: _incrementCounter,
-    //     tooltip: 'Increment',
-    //     child: Icon(Icons.add),
-    //   ), // This trailing comma makes auto-formatting nicer for build methods.
-    // );
   }
 }
 
@@ -1101,7 +934,7 @@ class DetailCard extends StatelessWidget {
   const DetailCard({
     Key key,
     @required this.title,
-    @required this.subtitle,
+    this.subtitle,
     this.caption,
   }) : super(key: key);
 
@@ -1115,26 +948,25 @@ class DetailCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    letterSpacing: -0.41,
-                    fontSize: 17.0,
-                  ),
-                ),
-                SizedBox(width: 14.0),
                 Expanded(
-                  child: Text(
-                    subtitle,
+                  child: RichText(
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      letterSpacing: -0.41,
-                      color: Color(0xFF50555C),
-                      fontSize: 15.0,
-                      height: 1.3,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: title,
+                          style: Styles.detailCardTitle,
+                        ),
+                        if (subtitle != null)
+                          TextSpan(
+                            text: "   " + subtitle,
+                            style: Styles.detailCardSubtitle,
+                          ),
+                      ],
                     ),
                   ),
                 ),
+                SizedBox(width: 14.0),
                 Icon(
                   FontAwesomeIcons.pen,
                   size: 14.0,
@@ -1149,13 +981,7 @@ class DetailCard extends StatelessWidget {
                     child: Text(
                       caption,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        letterSpacing: -0.41,
-                        color: Color(0xFF50555C),
-                        fontWeight: FontWeight.w300,
-                        fontSize: 15.0,
-                        height: 1.3,
-                      ),
+                      style: Styles.detailCardSubtitle,
                     ),
                   ),
                 ],
@@ -1197,48 +1023,19 @@ class AddressInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFFE9E9E9))),
-      ),
+      decoration: BoxDecoration(border: Styles.inputBoxBorder),
       padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Address',
-            style: Theme.of(context).textTheme.subhead.copyWith(
-                  color: Color(0xFF888888),
-                  fontSize: 12.0,
-                  height: 0.8,
-                ),
+            style: Styles.inputLabelSmallText,
           ),
           SizedBox(height: 10.0),
-          Card(
-            elevation: 3.0,
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    '814 Lasalle St.',
-                    style: TextStyle(
-                      letterSpacing: -0.41,
-                      fontSize: 17.0,
-                    ),
-                  ),
-                  Text(
-                    'Jacksonville, Florida 32207',
-                    style: TextStyle(
-                      letterSpacing: -0.41,
-                      color: Color(0xFF50555C),
-                      fontSize: 15.0,
-                      height: 1.3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          DetailCard(
+            title: '814 Lasalle St',
+            caption: 'Jacksonville, Florida 32207',
           ),
         ],
       ),
@@ -1270,17 +1067,9 @@ class SliderInputState extends State<SliderInput> {
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = Theme.of(context).textTheme.subhead.copyWith(
-          color: Color(0xFF888888),
-          fontSize: 12.0,
-          height: 0.8,
-        );
-
     return Container(
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFFE9E9E9))),
-      ),
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      decoration: BoxDecoration(border: Styles.inputBoxBorder),
+      padding: EdgeInsets.symmetric(vertical: 14.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -1289,19 +1078,9 @@ class SliderInputState extends State<SliderInput> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  widget.label,
-                  style: labelStyle,
-                ),
+                Text(widget.label, style: Styles.inputLabelSmallText),
                 SizedBox(height: 8.0),
-                Text(
-                  _stringValue(),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16.0,
-                  ),
-                ),
+                Text(_stringValue(), style: Styles.inputText),
               ],
             ),
           ),
@@ -1311,7 +1090,7 @@ class SliderInputState extends State<SliderInput> {
             divisions: 10,
             onChanged: _handleSliderChange,
             value: _sliderValue,
-          )
+          ),
         ],
       ),
     );
@@ -1343,26 +1122,15 @@ class RadioInputState extends State<RadioInput> {
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = Theme.of(context).textTheme.subhead.copyWith(
-          color: Color(0xFF888888),
-          fontSize: 12.0,
-          height: 0.8,
-        );
-
     return Container(
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFFE9E9E9))),
-      ),
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      decoration: BoxDecoration(border: Styles.inputBoxBorder),
+      padding: EdgeInsets.symmetric(vertical: 14.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              widget.label,
-              style: labelStyle,
-            ),
+            child: Text(widget.label, style: Styles.inputLabelSmallText),
           ),
           for (var name in widget.options.keys)
             // TODO: replace with a custom Radio using GestureDetector
@@ -1402,40 +1170,32 @@ class TextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final secureIcon = Image.asset("assets/secureicon.png", scale: 4);
-    final labelColor = secure ? Color(0xFF3096D6) : Color(0xFF888888);
-    final textColor = secure ? Color(0xFF3096D6) : Colors.black;
+
+    final labelStyle = Styles.inputLabelText.copyWith(
+      color: secure ? Styles.trifidBlue : Styles.inputLabelText.color,
+    );
+    final textStyle = Styles.inputText.copyWith(
+      color: secure ? Styles.trifidBlue : Styles.inputText.color,
+    );
 
     final textField = TextField(
       textAlign: centered ? TextAlign.center : TextAlign.start,
       decoration: InputDecoration(
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFE9E9E9)),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFE9E9E9)),
-        ),
+        enabledBorder: Styles.inputBorder,
+        focusedBorder: Styles.inputBorder,
         labelText: label,
-        labelStyle: TextStyle(
-          color: labelColor,
-          fontWeight: FontWeight.w400,
-        ),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 13.0,
-        ),
+        labelStyle: labelStyle,
+        contentPadding: Styles.inputPadding,
         prefixText: phone ? "🇺🇸  " : null,
         prefixStyle: TextStyle(color: Colors.black),
       ),
-      style: TextStyle(
-        color: textColor,
-        fontWeight: FontWeight.w400,
-      ),
+      style: textStyle,
       controller: TextEditingController(text: text),
     );
 
     return secure
         ? Container(
-            color: Color(0xFFF5FAFD),
+            color: Styles.trifidBlue.withOpacity(0.05),
             child: Stack(
               children: [
                 textField,
