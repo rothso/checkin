@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/styles.dart';
 
 void main() => runApp(MyApp());
@@ -43,10 +42,7 @@ class MyApp extends StatelessWidget {
             fontSize: 18.0,
             color: Colors.black,
           ),
-          title: textTheme.title.copyWith(
-            fontWeight: FontWeight.w400,
-            fontSize: 17.0,
-          ),
+          title: Styles.appBarTitle,
           caption: textTheme.caption.copyWith(
             fontSize: 15.0,
             fontWeight: FontWeight.w300,
@@ -266,43 +262,55 @@ class PersonalInfoScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Flexible(
-                            child: TextInput("First Name", text: "Peter"),
+                            child: TextInput(
+                              label: "First Name",
+                              text: "Peter",
+                            ),
                           ),
                           VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
                           Flexible(
-                            child: TextInput("Last Name", text: "Parker"),
+                            child: TextInput(
+                              label: "Last Name",
+                              text: "Parker",
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    TextInput("Middle Name", text: "Ben"),
-                    TextInput("Date of Birth", text: "June 6, 1980"),
+                    TextInput(label: "Middle Name", text: "Ben"),
+                    TextInput(label: "Date of Birth", text: "June 6, 1980"),
                     RadioInput("Sex", {
                       'Male': Sex.male,
                       'Female': Sex.female,
                       'Other': Sex.other,
                     }),
                     TextInput(
-                      "Social Security Number (SSN)",
+                      label: "Social Security Number (SSN)",
                       text: "XXX-XX-XXXX",
                       secure: true,
                     ),
                     AddressInput(),
                     TextInput(
-                      "Phone Number",
+                      label: "Phone Number",
                       text: "(904) 555-1234",
                       phone: true,
                     ),
-                    TextInput("Email (optional)", text: "parker.p@gmail.com"),
-                    ListHeader("EMERGENCY CONTACT"),
-                    TextInput("Emergency Contact Name", text: "Ned Leeds"),
                     TextInput(
-                      "Emergency Contact Phone Number",
+                      label: "Email (optional)",
+                      text: "parker.p@gmail.com",
+                    ),
+                    ListHeader("EMERGENCY CONTACT"),
+                    TextInput(
+                      label: "Emergency Contact Name",
+                      text: "Ned Leeds",
+                    ),
+                    TextInput(
+                      label: "Emergency Contact Phone Number",
                       text: "(904) 555-1235",
                       phone: true,
                     ),
                     TextInput(
-                      "Relationship to Emergency Contact",
+                      label: "Relationship to Emergency Contact",
                       text: "Brother",
                     ),
                     ListHeader("DEMOGRAPHICS"),
@@ -426,31 +434,37 @@ class InsuranceScreen extends StatelessWidget {
                   shrinkWrap: true,
                   children: [
                     new TextInput(
-                      "Insurance Company Name",
+                      label: "Insurance Company Name",
                       text: "Florida Blue",
                     ),
                     new TextInput(
-                      "Insurance Company Phone Number",
+                      label: "Insurance Company Phone Number",
                       text: "(904) 555-1236",
                       phone: true,
                     ),
                     new TextInput(
-                      "Policy Holder First Name",
+                      label: "Policy Holder First Name",
                       text: "Peter",
                     ),
                     new TextInput(
-                      "Policy Holder Last Name",
+                      label: "Policy Holder Last Name",
                       text: "Parker",
                     ),
                     IntrinsicHeight(
                       child: Row(
                         children: [
                           Flexible(
-                            child: new TextInput("Policy Number", text: "1234"),
+                            child: new TextInput(
+                              label: "Policy Number",
+                              text: "1234",
+                            ),
                           ),
                           VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
                           Flexible(
-                            child: new TextInput("Group Number", text: "5432"),
+                            child: new TextInput(
+                              label: "Group Number",
+                              text: "5432",
+                            ),
                           ),
                         ],
                       ),
@@ -514,17 +528,12 @@ class MedicalHistoryScreen extends StatelessWidget {
                         SizedBox(height: 20.0),
                         Text(
                           'Medical History',
-                          style: Theme.of(context).textTheme.title,
+                          style: Styles.appBarTitle,
                         ),
                         SizedBox(height: 5.0),
                         Text(
                           'Descibe your allergies and medical history.',
-                          style: TextStyle(
-                            color: Color(0xFF626262),
-                            fontWeight: FontWeight.w300,
-                            fontStyle: FontStyle.italic,
-                            fontSize: 13.0,
-                          ),
+                          style: Styles.appBarSubtitle,
                         ),
                       ],
                     ),
@@ -532,17 +541,13 @@ class MedicalHistoryScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 24.0),
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 1,
-                    height: 2,
-                    color: Color(0xFF3096D6),
-                  ),
-                  Expanded(
-                    child: Divider(height: 1, color: Color(0xFFC9C9C9)),
-                  ),
-                ],
+              SizedBox(
+                height: 2.0,
+                child: LinearProgressIndicator(
+                  value: 1 / 3,
+                  backgroundColor: Styles.grey200,
+                  valueColor: AlwaysStoppedAnimation(Styles.trifidBlue),
+                ),
               ),
               Expanded(
                 child: ListView(
@@ -586,38 +591,37 @@ class MedicalHistoryScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 16.0),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Text(
-                              'Immunizations',
-                              style: TextStyle(
-                                fontSize: 17.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Center(
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        border: Styles.inputBoxBorder,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
                             child: Padding(
                               padding: EdgeInsets.all(16.0),
                               child: Text(
-                                'Year',
-                                style: TextStyle(
-                                  fontSize: 17.0,
-                                  color: Color(0xFFA1A1A1),
+                                'Immunizations',
+                                style: Styles.detailTitleText,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text(
+                                  'Year',
+                                  style: Styles.detailTitleText,
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    Divider(height: 1, color: Color(0xFFC9C9C9)),
                     YearInput(title: 'Chicken Pox', year: '1998'),
                     YearInput(title: 'Hepatitis A', year: '1989'),
                     YearInput(
@@ -653,34 +657,41 @@ class MedicalHistoryScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 16.0),
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: RaisedButton(
-                        onPressed: () => {},
-                        color: Color(0xFF3096D6),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(5.0),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.all(13.0),
-                          child: Text(
-                            "Next Step: Symptoms",
-                            style: new TextStyle(
-                              color: Colors.white,
-                              decoration: TextDecoration.none,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Open Sans",
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    ContinueButton(text: "Next Step: Symptoms"),
                   ],
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ContinueButton extends StatelessWidget {
+  final String text;
+  final VoidCallback pressed;
+
+  const ContinueButton({
+    Key key,
+    @required this.text,
+    this.pressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16.0),
+      child: RaisedButton(
+        onPressed: pressed ?? () => {},
+        color: Styles.trifidBlue,
+        shape: RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(5.0),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(13.0),
+          child: Text(text, style: Styles.buttonText),
         ),
       ),
     );
@@ -775,15 +786,11 @@ class ConditionsInputState extends State<ConditionsInput> {
     return Theme(
       data: Theme.of(context).copyWith(
         chipTheme: Theme.of(context).chipTheme.copyWith(
-              secondarySelectedColor: Color(0xFF3096D6),
-              backgroundColor: Colors.white,
-              padding: EdgeInsets.all(8.0),
-              labelStyle: TextStyle(color: Color(0xFF626262), fontSize: 15.0),
-              secondaryLabelStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
-              ),
-            ),
+            secondarySelectedColor: Styles.trifidBlue,
+            backgroundColor: Colors.white,
+            padding: EdgeInsets.all(8.0),
+            labelStyle: Styles.conditionsText,
+            secondaryLabelStyle: Styles.conditionsSelectedText),
       ),
       child: Wrap(
         spacing: 8.0,
@@ -796,8 +803,8 @@ class ConditionsInputState extends State<ConditionsInput> {
               shape: StadiumBorder(
                 side: BorderSide(
                   color: _selected.contains(choice)
-                      ? Color(0xFF3096D6)
-                      : Color(0xFFCECECE),
+                      ? Styles.trifidBlue
+                      : Styles.grey300,
                 ),
               ),
             ),
@@ -827,30 +834,22 @@ class YearInput extends StatelessWidget {
             flex: 3,
             child: Container(
               decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Color(0xFFE9E9E9),
-                  ),
-                ),
+                border: Styles.inputBoxBorder,
               ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 13.0,
-              ),
+              padding: Styles.inputPadding,
               child: Text(
                 title,
-                style: TextStyle(
-                  color: Color(0xFF888888),
-                  fontSize: 16.0,
-                ),
+                style: Styles.disabledInputText,
               ),
             ),
           ),
-          VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
+          VerticalDivider(
+            width: 1,
+            color: Styles.grey200,
+          ),
           Expanded(
             flex: 1,
             child: TextInput(
-              null,
               text: year,
               centered: true,
             ),
@@ -881,44 +880,33 @@ class DetailListInput extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: 12.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 17.0,
-                        ),
-                      ),
-                      SizedBox(height: 3.0),
-                      Text(
-                        subtitle,
-                        style: TextStyle(
-                          color: Color(0xFF929292),
-                          fontSize: 15.0,
-                          letterSpacing: -0.41,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (!noIcon)
-                  Padding(
-                    padding: EdgeInsets.only(right: 2.0),
-                    child: Icon(
-                      FontAwesomeIcons.plusCircle,
-                      size: 24.0,
-                      color: Color(0xFF3096D6),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      title,
+                      style: Styles.detailTitleText,
                     ),
-                  ),
-              ],
-            ),
+                    SizedBox(height: 3.0),
+                    Text(
+                      subtitle,
+                      style: Styles.detailDescriptionText,
+                    ),
+                  ],
+                ),
+              ),
+              if (!noIcon)
+                Padding(
+                  padding: EdgeInsets.only(right: 2.0),
+                  child: Styles.plusIcon,
+                ),
+            ],
           ),
+          SizedBox(height: 13.0),
+          // TODO: spacing between children
           ...children,
         ],
       ),
@@ -955,23 +943,19 @@ class DetailCard extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: title,
-                          style: Styles.detailCardTitle,
+                          style: Styles.detailTitleText,
                         ),
                         if (subtitle != null)
                           TextSpan(
                             text: "   " + subtitle,
-                            style: Styles.detailCardSubtitle,
+                            style: Styles.detailSubtitleText,
                           ),
                       ],
                     ),
                   ),
                 ),
                 SizedBox(width: 14.0),
-                Icon(
-                  FontAwesomeIcons.pen,
-                  size: 14.0,
-                  color: Color(0xFF929292),
-                ),
+                Styles.penIcon,
               ],
             ),
             if (caption != null)
@@ -981,7 +965,7 @@ class DetailCard extends StatelessWidget {
                     child: Text(
                       caption,
                       overflow: TextOverflow.ellipsis,
-                      style: Styles.detailCardSubtitle,
+                      style: Styles.detailSubtitleText,
                     ),
                   ),
                 ],
@@ -1004,13 +988,10 @@ class ListHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFF0F0F0),
+      color: Styles.grey200,
       padding: EdgeInsets.all(20),
       alignment: AlignmentDirectional.center,
-      child: Text(
-        title,
-        style: TextStyle(color: Color(0xFF929292)),
-      ),
+      child: Text(title, style: Styles.listHeaderText),
     );
   }
 }
@@ -1023,7 +1004,9 @@ class AddressInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Styles.inputBoxBorder),
+      decoration: BoxDecoration(
+        border: Styles.inputBoxBorder,
+      ),
       padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1068,7 +1051,9 @@ class SliderInputState extends State<SliderInput> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Styles.inputBoxBorder),
+      decoration: BoxDecoration(
+        border: Styles.inputBoxBorder,
+      ),
       padding: EdgeInsets.symmetric(vertical: 14.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1078,9 +1063,15 @@ class SliderInputState extends State<SliderInput> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(widget.label, style: Styles.inputLabelSmallText),
+                Text(
+                  widget.label,
+                  style: Styles.inputLabelSmallText,
+                ),
                 SizedBox(height: 8.0),
-                Text(_stringValue(), style: Styles.inputText),
+                Text(
+                  _stringValue(),
+                  style: Styles.inputText,
+                ),
               ],
             ),
           ),
@@ -1123,14 +1114,19 @@ class RadioInputState extends State<RadioInput> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Styles.inputBoxBorder),
+      decoration: BoxDecoration(
+        border: Styles.inputBoxBorder,
+      ),
       padding: EdgeInsets.symmetric(vertical: 14.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(widget.label, style: Styles.inputLabelSmallText),
+            child: Text(
+              widget.label,
+              style: Styles.inputLabelSmallText,
+            ),
           ),
           for (var name in widget.options.keys)
             // TODO: replace with a custom Radio using GestureDetector
@@ -1158,9 +1154,9 @@ class TextInput extends StatelessWidget {
   final bool phone;
   final bool centered;
 
-  const TextInput(
-    this.label, {
+  const TextInput({
     Key key,
+    this.label,
     this.text,
     this.secure = false,
     this.phone = false,
