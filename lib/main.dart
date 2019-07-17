@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
       statusBarIconBrightness: Brightness.dark,
     ));
 
-    final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
       title: 'Blue Screen',
       debugShowCheckedModeBanner: false,
@@ -31,14 +30,14 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
-        textTheme: textTheme.copyWith(
+        textTheme: Theme.of(context).textTheme.copyWith(
           display2: Styles.logoText,
           display1: Styles.headerText,
           title: Styles.appBarTitle,
           caption: Styles.captionText,
         ),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: ClinicCodeScreen(),
     );
   }
 }
