@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
 
     final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Blue Screen',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
@@ -32,21 +32,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
         textTheme: textTheme.copyWith(
-          display2: textTheme.display2.copyWith(
-            fontFamily: 'Jura',
-            fontWeight: FontWeight.w600,
-            fontSize: 30.0,
-          ),
-          display1: textTheme.display1.copyWith(
-            fontWeight: FontWeight.w400,
-            fontSize: 18.0,
-            color: Colors.black,
-          ),
+          display2: Styles.logoText,
+          display1: Styles.headerText,
           title: Styles.appBarTitle,
-          caption: textTheme.caption.copyWith(
-            fontSize: 15.0,
-            fontWeight: FontWeight.w300,
-          ),
+          caption: Styles.captionText,
         ),
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -110,15 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
               Image.asset('assets/trifidmedwhite.png', scale: 1.5),
               SizedBox(height: 12.0),
               Text(
-                'Trifid Med',
-                style: Theme.of(context).textTheme.display2.copyWith(
-                      color: Color(0xFF000000),
-                    ),
+                'Blue Screen',
+                style: Styles.logoText,
               ),
               SizedBox(height: 10.0),
               Text(
                 'Patient check-in, simplified.',
-                style: Theme.of(context).textTheme.caption,
+                style: Styles.captionText,
               ),
             ],
           ),
@@ -137,64 +124,45 @@ class ClinicCodeScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 50.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 'Enter your 6-digit clinic code',
-                style: Theme.of(context).textTheme.display1,
+                style: Styles.headerText,
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 16.0),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   'You can get this code by contacting your local clinic if they support the app.',
-                  style: Theme.of(context).textTheme.caption,
+                  style: Styles.captionText,
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 48.0),
+              SizedBox(height: 36.0),
               TextField(
                 autocorrect: false,
-                autofocus: true,
                 textAlign: TextAlign.center,
                 textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'XXXXXX',
-                  hintStyle: TextStyle(
-                    color: Color(0xFFCCCCCC),
-                  ),
+                  hintStyle: Styles.codeHint,
                 ),
-                style: TextStyle(
-                  fontFamily: 'Jura',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 32.0,
-                  letterSpacing: 4.0,
-                ),
+                style: Styles.codeText,
               ),
               SizedBox(height: 16.0),
-              RaisedButton(
+              ContinueButton(
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => PersonalInfoScreen(),
                   ),
                 ),
-                color: Color(0xFF000000),
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(50.0),
-                ),
-                child: Center(
-                  child: Text(
-                    "Continue",
-                    style: new TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.none,
-                      fontWeight: FontWeight.w300,
-                      fontFamily: "Open Sans",
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
+                text: "Continue",
+                color: Colors.black,
+                shape: StadiumBorder(),
               ),
             ],
           ),
@@ -224,17 +192,12 @@ class PersonalInfoScreen extends StatelessWidget {
                         SizedBox(height: 20.0),
                         Text(
                           'Personal Info',
-                          style: Theme.of(context).textTheme.title,
+                          style: Styles.appBarTitle,
                         ),
                         SizedBox(height: 5.0),
                         Text(
                           'Let the clinic know who you are.',
-                          style: TextStyle(
-                            color: Color(0xFF626262),
-                            fontWeight: FontWeight.w300,
-                            fontStyle: FontStyle.italic,
-                            fontSize: 13.0,
-                          ),
+                          style: Styles.appBarSubtitle,
                         ),
                       ],
                     ),
@@ -242,17 +205,13 @@ class PersonalInfoScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 24.0),
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.33,
-                    height: 2,
-                    color: Color(0xFF3096D6),
-                  ),
-                  Expanded(
-                    child: Divider(height: 1, color: Color(0xFFC9C9C9)),
-                  ),
-                ],
+              SizedBox(
+                height: 2.0,
+                child: LinearProgressIndicator(
+                  value: 1 / 3,
+                  backgroundColor: Styles.grey200,
+                  valueColor: AlwaysStoppedAnimation(Styles.trifidBlue),
+                ),
               ),
               Expanded(
                 child: ListView(
@@ -267,7 +226,7 @@ class PersonalInfoScreen extends StatelessWidget {
                               text: "Peter",
                             ),
                           ),
-                          VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
+                          VerticalDivider(width: 1, color: Styles.grey300),
                           Flexible(
                             child: TextInput(
                               label: "Last Name",
@@ -340,33 +299,14 @@ class PersonalInfoScreen extends StatelessWidget {
                       'Partnered': Marital.partnered,
                     }),
                     SliderInput("Gross Annual Income"),
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: RaisedButton(
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => InsuranceScreen(),
-                          ),
+                    ContinueButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InsuranceScreen(),
                         ),
-                        color: Color(0xFF3096D6),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(5.0),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.all(13.0),
-                          child: Text(
-                            "Next Step: Billing & Insurance",
-                            style: new TextStyle(
-                              color: Colors.white,
-                              decoration: TextDecoration.none,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Open Sans",
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ), //
+                      ),
+                      text: "Next Step: Billing & Insurance",
                     ),
                   ],
                 ),
@@ -399,17 +339,12 @@ class InsuranceScreen extends StatelessWidget {
                         SizedBox(height: 20.0),
                         Text(
                           'Billing & Insurance',
-                          style: Theme.of(context).textTheme.title,
+                          style: Styles.appBarTitle,
                         ),
                         SizedBox(height: 5.0),
                         Text(
                           'Let the clinic know your insurance plan.',
-                          style: TextStyle(
-                            color: Color(0xFF626262),
-                            fontWeight: FontWeight.w300,
-                            fontStyle: FontStyle.italic,
-                            fontSize: 13.0,
-                          ),
+                          style: Styles.appBarSubtitle,
                         ),
                       ],
                     ),
@@ -417,17 +352,13 @@ class InsuranceScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 24.0),
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.66,
-                    height: 2,
-                    color: Color(0xFF3096D6),
-                  ),
-                  Expanded(
-                    child: Divider(height: 1, color: Color(0xFFC9C9C9)),
-                  ),
-                ],
+              SizedBox(
+                height: 2.0,
+                child: LinearProgressIndicator(
+                  value: 2 / 3,
+                  backgroundColor: Styles.grey200,
+                  valueColor: AlwaysStoppedAnimation(Styles.trifidBlue),
+                ),
               ),
               Expanded(
                 child: ListView(
@@ -459,7 +390,7 @@ class InsuranceScreen extends StatelessWidget {
                               text: "1234",
                             ),
                           ),
-                          VerticalDivider(width: 1, color: Color(0xFFC9C9C9)),
+                          VerticalDivider(width: 1, color: Styles.grey300),
                           Flexible(
                             child: new TextInput(
                               label: "Group Number",
@@ -469,33 +400,14 @@ class InsuranceScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: RaisedButton(
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MedicalHistoryScreen(),
-                          ),
+                    ContinueButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MedicalHistoryScreen(),
                         ),
-                        color: Color(0xFF3096D6),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(5.0),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.all(13.0),
-                          child: Text(
-                            "Next Step: Medical History",
-                            style: new TextStyle(
-                              color: Colors.white,
-                              decoration: TextDecoration.none,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Open Sans",
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ), //
+                      ),
+                      text: "Next Step: Medical History",
                     ),
                   ],
                 ),
@@ -544,7 +456,7 @@ class MedicalHistoryScreen extends StatelessWidget {
               SizedBox(
                 height: 2.0,
                 child: LinearProgressIndicator(
-                  value: 1 / 3,
+                  value: 3 / 3,
                   backgroundColor: Styles.grey200,
                   valueColor: AlwaysStoppedAnimation(Styles.trifidBlue),
                 ),
@@ -671,12 +583,16 @@ class MedicalHistoryScreen extends StatelessWidget {
 
 class ContinueButton extends StatelessWidget {
   final String text;
-  final VoidCallback pressed;
+  final Color color;
+  final ShapeBorder shape;
+  final VoidCallback onPressed;
 
   const ContinueButton({
     Key key,
     @required this.text,
-    this.pressed,
+    this.color,
+    this.shape,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -684,9 +600,9 @@ class ContinueButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: RaisedButton(
-        onPressed: pressed ?? () => {},
-        color: Styles.trifidBlue,
-        shape: RoundedRectangleBorder(
+        onPressed: onPressed ?? () => {},
+        color: color ?? Styles.trifidBlue,
+        shape: shape ?? RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(5.0),
         ),
         child: Container(
@@ -845,7 +761,7 @@ class YearInput extends StatelessWidget {
           ),
           VerticalDivider(
             width: 1,
-            color: Styles.grey200,
+            color: Styles.grey300,
           ),
           Expanded(
             flex: 1,

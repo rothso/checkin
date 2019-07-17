@@ -46,6 +46,7 @@ flutter:
   assets:
    - assets/hospital.png
    - assets/trifidmedwhite.png
+   - assets/trifidmedblack.png
    - assets/secureicon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

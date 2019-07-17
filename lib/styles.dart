@@ -4,6 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 abstract class Styles {
 
+  static const logoText = TextStyle(
+    fontFamily: 'Jura',
+    fontWeight: FontWeight.w600,
+    fontSize: 30.0,
+  );
+
   static const appBarTitle = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 17.0,
@@ -14,6 +20,28 @@ abstract class Styles {
     fontWeight: FontWeight.w300,
     fontStyle: FontStyle.italic,
     fontSize: 13.0,
+  );
+
+  static const headerText = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.w400,
+    fontSize: 20.0,
+  );
+
+  static const captionText = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 15.0,
+  );
+
+  static const codeText = TextStyle(
+    fontFamily: 'Jura',
+    fontWeight: FontWeight.w600,
+    fontSize: 32.0,
+    letterSpacing: 4.0,
+  );
+
+  static const codeHint = TextStyle(
+    color: Styles.grey300,
   );
 
   static const inputText = TextStyle(
