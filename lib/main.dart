@@ -4,10 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/styles.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(BlueScreen());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class BlueScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -19,97 +18,16 @@ class MyApp extends StatelessWidget {
       title: 'Blue Screen',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
         textTheme: Theme.of(context).textTheme.copyWith(
-          display2: Styles.logoText,
-          display1: Styles.headerText,
-          title: Styles.appBarTitle,
-          caption: Styles.captionText,
-        ),
+              display2: Styles.logoText,
+              display1: Styles.headerText,
+              title: Styles.appBarTitle,
+              caption: Styles.captionText,
+            ),
       ),
       home: ClinicCodeScreen(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ClinicCodeScreen(),
-        ),
-      ),
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/trifidmedwhite.png', scale: 1.5),
-              SizedBox(height: 12.0),
-              Text(
-                'Blue Screen',
-                style: Styles.logoText,
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'Patient check-in, simplified.',
-                style: Styles.captionText,
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
@@ -140,6 +58,7 @@ class ClinicCodeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 36.0),
+              // TODO: form field
               TextField(
                 autocorrect: false,
                 textAlign: TextAlign.center,
@@ -152,6 +71,7 @@ class ClinicCodeScreen extends StatelessWidget {
                 style: Styles.codeText,
               ),
               SizedBox(height: 16.0),
+              // TODO: disable press until form is valid
               ContinueButton(
                 onPressed: () => Navigator.push(
                   context,
@@ -236,23 +156,28 @@ class PersonalInfoScreen extends StatelessWidget {
                       ),
                     ),
                     TextInput(label: "Middle Name", text: "Ben"),
+                    // TODO: use native date selector
                     TextInput(label: "Date of Birth", text: "June 6, 1980"),
                     RadioInput("Sex", {
                       'Male': Sex.male,
                       'Female': Sex.female,
                       'Other': Sex.other,
                     }),
+                    // TODO: custom SSN masking, and hide input when unfocused
                     TextInput(
                       label: "Social Security Number (SSN)",
                       text: "XXX-XX-XXXX",
                       secure: true,
                     ),
+                    // TODO: allow addresses to be added, removed, edited
                     AddressInput(),
+                    // TODO: phone number masking, change flag
                     TextInput(
                       label: "Phone Number",
                       text: "(904) 555-1234",
                       phone: true,
                     ),
+                    // TODO: email address validation
                     TextInput(
                       label: "Email (optional)",
                       text: "parker.p@gmail.com",
@@ -262,6 +187,7 @@ class PersonalInfoScreen extends StatelessWidget {
                       label: "Emergency Contact Name",
                       text: "Ned Leeds",
                     ),
+                    // TODO: same phone number stuff as above
                     TextInput(
                       label: "Emergency Contact Phone Number",
                       text: "(904) 555-1235",
@@ -298,6 +224,7 @@ class PersonalInfoScreen extends StatelessWidget {
                       'Partnered': Marital.partnered,
                     }),
                     SliderInput("Gross Annual Income"),
+                    // TODO: disable until form is valid
                     ContinueButton(
                       onPressed: () => Navigator.push(
                         context,
@@ -367,6 +294,7 @@ class InsuranceScreen extends StatelessWidget {
                       label: "Insurance Company Name",
                       text: "Florida Blue",
                     ),
+                    // TODO: same as other phone number fields
                     new TextInput(
                       label: "Insurance Company Phone Number",
                       text: "(904) 555-1236",
@@ -384,6 +312,7 @@ class InsuranceScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Flexible(
+                            // TODO: numbers only
                             child: new TextInput(
                               label: "Policy Number",
                               text: "1234",
@@ -391,6 +320,7 @@ class InsuranceScreen extends StatelessWidget {
                           ),
                           VerticalDivider(width: 1, color: Styles.grey300),
                           Flexible(
+                            // TODO: numbers only
                             child: new TextInput(
                               label: "Group Number",
                               text: "5432",
@@ -399,6 +329,7 @@ class InsuranceScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    // TODO: disable until form is valid
                     ContinueButton(
                       onPressed: () => Navigator.push(
                         context,
@@ -465,6 +396,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                   shrinkWrap: true,
                   children: [
                     SizedBox(height: 16.0),
+                    // TODO: dynamically add, edit, remove allergies
                     DetailListInput(
                       title: "Allergies",
                       subtitle:
@@ -483,6 +415,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 32.0),
+                    // TODO: dynamically add, edit, remove medications
                     DetailListInput(
                       title: "Medications",
                       subtitle: "List all the medications you are taking",
@@ -533,6 +466,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    // TODO: native year input selector
                     YearInput(title: 'Chicken Pox', year: '1998'),
                     YearInput(title: 'Hepatitis A', year: '1989'),
                     YearInput(
@@ -546,6 +480,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                           'List any conditions you have or have had in the past',
                       noIcon: true,
                       children: [
+                        // TODO: search term should be used to filter conditions
                         SearchBar(
                           controller: TextEditingController(),
                           focusNode: FocusNode(),
@@ -555,6 +490,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 32.0),
+                    // TODO: dynamically add, edit, remove surgical history
                     DetailListInput(
                       title: "Surgical History",
                       subtitle: "List any surgeries you have had in the past",
@@ -568,6 +504,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 16.0),
+                    // TODO: disable until form is valid
                     ContinueButton(text: "Next Step: Symptoms"),
                   ],
                 ),
@@ -601,9 +538,10 @@ class ContinueButton extends StatelessWidget {
       child: RaisedButton(
         onPressed: onPressed ?? () => {},
         color: color ?? Styles.trifidBlue,
-        shape: shape ?? RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(5.0),
-        ),
+        shape: shape ??
+            RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(5.0),
+            ),
         child: Container(
           padding: EdgeInsets.all(13.0),
           child: Text(text, style: Styles.buttonText),
