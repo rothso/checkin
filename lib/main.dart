@@ -190,108 +190,121 @@ class PersonalInfoScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    IntrinsicHeight(
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: TextInput(
-                              label: "First Name",
-                              text: "Peter",
+                child: Form(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: TextInput(
+                                label: "First Name",
+                                text: "Peter",
+                              ),
                             ),
-                          ),
-                          VerticalDivider(width: 1, color: Styles.grey300),
-                          Flexible(
-                            child: TextInput(
-                              label: "Last Name",
-                              text: "Parker",
+                            VerticalDivider(width: 1, color: Styles.grey300),
+                            Flexible(
+                              child: TextInput(
+                                label: "Last Name",
+                                text: "Parker",
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    TextInput(label: "Middle Name", text: "Ben"),
-                    // TODO: use native date selector
-                    TextInput(label: "Date of Birth", text: "June 6, 1980"),
-                    RadioInput("Sex", {
-                      'Male': Sex.male,
-                      'Female': Sex.female,
-                      'Other': Sex.other,
-                    }),
-                    // TODO: custom SSN masking, and hide input when unfocused
-                    TextInput(
-                      label: "Social Security Number (SSN)",
-                      text: "XXX-XX-XXXX",
-                      secure: true,
-                    ),
-                    // TODO: allow addresses to be added, removed, edited
-                    AddressInput(),
-                    // TODO: phone number masking, change flag
-                    TextInput(
-                      label: "Phone Number",
-                      text: "(904) 555-1234",
-                      phone: true,
-                    ),
-                    // TODO: email address validation
-                    TextInput(
-                      label: "Email (optional)",
-                      text: "parker.p@gmail.com",
-                    ),
-                    ListHeader("EMERGENCY CONTACT"),
-                    TextInput(
-                      label: "Emergency Contact Name",
-                      text: "Ned Leeds",
-                    ),
-                    // TODO: same phone number stuff as above
-                    TextInput(
-                      label: "Emergency Contact Phone Number",
-                      text: "(904) 555-1235",
-                      phone: true,
-                    ),
-                    TextInput(
-                      label: "Relationship to Emergency Contact",
-                      text: "Brother",
-                    ),
-                    ListHeader("DEMOGRAPHICS"),
-                    RadioInput("Race", {
-                      'African-America': Race.africanAmerican,
-                      'Asian': Race.asian,
-                      'Hispanic': Race.hispanic,
-                      'Native American': Race.nativeAmerican,
-                      'White': Race.white,
-                      'Other': Race.other,
-                    }),
-                    RadioInput("Ethnicity", {
-                      'American Indian or Alaskan Native': Ethnicity.native,
-                      'Asian': Ethnicity.asian,
-                      'Black or African American': Ethnicity.black,
-                      'Hispanic or Latino': Ethnicity.hispanic,
-                      'Native Hawaiian or Other Pacific Islander':
-                          Ethnicity.pacific,
-                      'White': Ethnicity.white,
-                    }),
-                    RadioInput("Marital Status", {
-                      'Married': Marital.married,
-                      'Single': Marital.single,
-                      'Divorced': Marital.divorced,
-                      'Separated': Marital.separated,
-                      'Widowed': Marital.widowed,
-                      'Partnered': Marital.partnered,
-                    }),
-                    SliderInput("Gross Annual Income"),
-                    // TODO: disable until form is valid
-                    ContinueButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => InsuranceScreen(),
+                          ],
                         ),
                       ),
-                      text: "Next Step: Billing & Insurance",
-                    ),
-                  ],
+                      TextInput(label: "Middle Name", text: "Ben"),
+                      Container(
+                        color: Color(0xfffe4949),
+                        padding: EdgeInsets.all(16.0),
+                        child: Text(
+                          "Please enter a middle name",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      // TODO: use native date selector
+                      TextInput(label: "Date of Birth", text: "June 6, 1980"),
+                      RadioInput("Sex", {
+                        'Male': Sex.male,
+                        'Female': Sex.female,
+                        'Other': Sex.other,
+                      }),
+                      // TODO: custom SSN masking, and hide input when unfocused
+                      TextInput(
+                        label: "Social Security Number (SSN)",
+                        text: "XXX-XX-XXXX",
+                        secure: true,
+                      ),
+                      // TODO: allow addresses to be added, removed, edited
+                      AddressInput(),
+                      // TODO: phone number masking, change flag
+                      TextInput(
+                        label: "Phone Number",
+                        text: "(904) 555-1234",
+                        phone: true,
+                      ),
+                      // TODO: email address validation
+                      TextInput(
+                        label: "Email (optional)",
+                        text: "parker.p@gmail.com",
+                      ),
+                      ListHeader("EMERGENCY CONTACT"),
+                      TextInput(
+                        label: "Emergency Contact Name",
+                        text: "Ned Leeds",
+                      ),
+                      // TODO: same phone number stuff as above
+                      TextInput(
+                        label: "Emergency Contact Phone Number",
+                        text: "(904) 555-1235",
+                        phone: true,
+                      ),
+                      TextInput(
+                        label: "Relationship to Emergency Contact",
+                        text: "Brother",
+                      ),
+                      ListHeader("DEMOGRAPHICS"),
+                      RadioInput("Race", {
+                        'African-America': Race.africanAmerican,
+                        'Asian': Race.asian,
+                        'Hispanic': Race.hispanic,
+                        'Native American': Race.nativeAmerican,
+                        'White': Race.white,
+                        'Other': Race.other,
+                      }),
+                      RadioInput("Ethnicity", {
+                        'American Indian or Alaskan Native': Ethnicity.native,
+                        'Asian': Ethnicity.asian,
+                        'Black or African American': Ethnicity.black,
+                        'Hispanic or Latino': Ethnicity.hispanic,
+                        'Native Hawaiian or Other Pacific Islander':
+                            Ethnicity.pacific,
+                        'White': Ethnicity.white,
+                      }),
+                      RadioInput("Marital Status", {
+                        'Married': Marital.married,
+                        'Single': Marital.single,
+                        'Divorced': Marital.divorced,
+                        'Separated': Marital.separated,
+                        'Widowed': Marital.widowed,
+                        'Partnered': Marital.partnered,
+                      }),
+                      SliderInput("Gross Annual Income"),
+                      // TODO: disable until form is valid
+                      ContinueButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => InsuranceScreen(),
+                          ),
+                        ),
+                        text: "Next Step: Billing & Insurance",
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -1051,6 +1064,7 @@ class RadioInputState extends State<RadioInput> {
                 controlAffinity: ListTileControlAffinity.trailing,
               ),
             ),
+          SizedBox(height: 8.0),
         ],
       ),
     );
