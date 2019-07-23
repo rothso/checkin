@@ -39,8 +39,20 @@ class ClinicCodeScreen extends StatefulWidget {
 
 class ClinicCodeState extends State<ClinicCodeScreen> {
   final formKey = GlobalKey<FormState>();
+  final controller = TextEditingController();
+  bool submitEnabled = false;
   String clinicCode;
   String errorText;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      setState(() {
+        submitEnabled = controller.text.trim().length == 6;
+      });
+    });
+  }
 
   String _validate(value) {
     setState(() {
@@ -111,6 +123,7 @@ class ClinicCodeState extends State<ClinicCodeScreen> {
                   style: Styles.codeText,
                   validator: _validate,
                   onSaved: (value) => clinicCode = value,
+                  controller: controller,
                 ),
                 if (errorText != null)
                   Text(
@@ -121,7 +134,7 @@ class ClinicCodeState extends State<ClinicCodeScreen> {
                 SizedBox(height: 16.0),
                 // TODO: disable press until form is valid
                 ContinueButton(
-                  onPressed: () => _submit(context),
+                  onPressed: submitEnabled ? () => _submit(context) : null,
                   text: "Continue",
                   color: Colors.black,
                   shape: StadiumBorder(),
