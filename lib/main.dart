@@ -32,58 +32,102 @@ class BlueScreen extends StatelessWidget {
   }
 }
 
-class ClinicCodeScreen extends StatelessWidget {
+class ClinicCodeScreen extends StatefulWidget {
+  @override
+  ClinicCodeState createState() => ClinicCodeState();
+}
+
+class ClinicCodeState extends State<ClinicCodeScreen> {
+  final formKey = GlobalKey<FormState>();
+  String clinicCode;
+  String errorText;
+
+  String _validate(value) {
+    setState(() {
+      if (value.isEmpty) {
+        errorText = 'Please enter a clinic code!';
+      } else if (!RegExp(r'^[a-zA-Z\d]{6}$').hasMatch(value)) {
+        errorText = 'Invalid clinic code';
+      } else {
+        errorText = null;
+      }
+    });
+    return errorText == null ? null : "";
+  }
+
+  void _submit(BuildContext context) {
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PersonalInfoScreen(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 50.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Enter your 6-digit clinic code',
-                style: Styles.headerText,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 16.0),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text(
-                  'You can get this code by contacting your local clinic if they support the app.',
-                  style: Styles.captionText,
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Enter your 6-digit clinic code',
+                  style: Styles.headerText,
                   textAlign: TextAlign.center,
                 ),
-              ),
-              SizedBox(height: 36.0),
-              // TODO: form field
-              TextField(
-                autocorrect: false,
-                textAlign: TextAlign.center,
-                textCapitalization: TextCapitalization.characters,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'XXXXXX',
-                  hintStyle: Styles.codeHint,
-                ),
-                style: Styles.codeText,
-              ),
-              SizedBox(height: 16.0),
-              // TODO: disable press until form is valid
-              ContinueButton(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PersonalInfoScreen(),
+                SizedBox(height: 16.0),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    'You can get this code by contacting your local clinic if they support the app.',
+                    style: Styles.captionText,
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                text: "Continue",
-                color: Colors.black,
-                shape: StadiumBorder(),
-              ),
-            ],
+                SizedBox(height: 36.0),
+                TextFormField(
+                  autocorrect: false,
+                  textAlign: TextAlign.center,
+                  textCapitalization: TextCapitalization.characters,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(6),
+                    WhitelistingTextInputFormatter(RegExp(r'[a-zA-Z\d]')),
+                  ],
+                  decoration: InputDecoration(
+                    errorStyle: TextStyle(height: 0),
+                    border: InputBorder.none,
+                    hintText: 'XXXXXX',
+                    hintStyle: Styles.codeHint,
+                  ),
+                  style: Styles.codeText,
+                  validator: _validate,
+                  onSaved: (value) => clinicCode = value,
+                ),
+                if (errorText != null)
+                  Text(
+                    errorText,
+                    textAlign: TextAlign.center,
+                    style: Styles.codeError,
+                  ),
+                SizedBox(height: 16.0),
+                // TODO: disable press until form is valid
+                ContinueButton(
+                  onPressed: () => _submit(context),
+                  text: "Continue",
+                  color: Colors.black,
+                  shape: StadiumBorder(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -536,7 +580,7 @@ class ContinueButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: RaisedButton(
-        onPressed: onPressed ?? () => {},
+        onPressed: onPressed,
         color: color ?? Styles.trifidBlue,
         shape: shape ??
             RoundedRectangleBorder(
@@ -1006,6 +1050,8 @@ class TextInput extends StatelessWidget {
   final bool secure;
   final bool phone;
   final bool centered;
+  final FormFieldValidator<String> validator;
+  final FormFieldSetter<String> onSaved;
 
   const TextInput({
     Key key,
@@ -1014,6 +1060,8 @@ class TextInput extends StatelessWidget {
     this.secure = false,
     this.phone = false,
     this.centered = false,
+    this.validator,
+    this.onSaved,
   }) : super(key: key);
 
   @override
@@ -1027,7 +1075,7 @@ class TextInput extends StatelessWidget {
       color: secure ? Styles.trifidBlue : Styles.inputText.color,
     );
 
-    final textField = TextField(
+    final textField = TextFormField(
       textAlign: centered ? TextAlign.center : TextAlign.start,
       decoration: InputDecoration(
         enabledBorder: Styles.inputBorder,
@@ -1039,7 +1087,8 @@ class TextInput extends StatelessWidget {
         prefixStyle: TextStyle(color: Colors.black),
       ),
       style: textStyle,
-      controller: TextEditingController(text: text),
+      validator: validator,
+      onSaved: onSaved,
     );
 
     return secure

@@ -44,6 +44,11 @@ abstract class Styles {
     color: Styles.grey300,
   );
 
+  static const codeError = TextStyle(
+    color: Colors.red,
+    fontSize: 16.0,
+  );
+
   static const inputText = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w400,
