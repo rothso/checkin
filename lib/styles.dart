@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 abstract class Styles {
-
   static const logoText = TextStyle(
     fontFamily: 'Jura',
     fontWeight: FontWeight.w600,
@@ -45,7 +44,7 @@ abstract class Styles {
   );
 
   static const codeError = TextStyle(
-    color: Colors.red,
+    color: Styles.errorRed,
     fontSize: 16.0,
   );
 
@@ -114,6 +113,11 @@ abstract class Styles {
     fontSize: 15,
   );
 
+  static const hiddenText = TextStyle(
+    color: Colors.transparent,
+    height: 0,
+  );
+
   static const inputPadding = EdgeInsets.symmetric(
     horizontal: 16.0,
     vertical: 13.0,
@@ -142,6 +146,7 @@ abstract class Styles {
   static const trifidBlue = Color(0xff3096d6);
   static const grey800 = Color(0xff50555c);
   static const grey500 = Color(0xff888888);
-  static const grey300 = Color(0xFFCECECE);
+  static const grey300 = Color(0xffcecece);
   static const grey200 = Color(0xffe9e9e9);
+  static const errorRed = Color(0xfffe4949);
 }

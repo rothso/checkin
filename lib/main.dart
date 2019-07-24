@@ -115,7 +115,7 @@ class ClinicCodeState extends State<ClinicCodeScreen> {
                     WhitelistingTextInputFormatter(RegExp(r'[a-zA-Z\d]')),
                   ],
                   decoration: InputDecoration(
-                    errorStyle: TextStyle(height: 0),
+                    errorStyle: Styles.hiddenText,
                     border: InputBorder.none,
                     hintText: 'XXXXXX',
                     hintStyle: Styles.codeHint,
@@ -214,16 +214,12 @@ class PersonalInfoScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      TextInput(label: "Middle Name", text: "Ben"),
-                      Container(
-                        color: Color(0xfffe4949),
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          "Please enter a middle name",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
+                      TextInput(
+                        label: "Middle Name",
+                        text: "Ben",
+                        validator: (value) {
+                          return "Please enter a middle name";
+                        },
                       ),
                       // TODO: use native date selector
                       TextInput(label: "Date of Birth", text: "June 6, 1980"),
@@ -1071,7 +1067,7 @@ class RadioInputState extends State<RadioInput> {
   }
 }
 
-class TextInput extends StatelessWidget {
+class TextInput extends StatefulWidget {
   final String label;
   final String text;
   final bool secure;
@@ -1092,33 +1088,66 @@ class TextInput extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  TextInputState createState() => TextInputState();
+}
+
+class TextInputState extends State<TextInput> {
+  String error;
+
+  @override
   Widget build(BuildContext context) {
     final secureIcon = Image.asset("assets/secureicon.png", scale: 4);
 
     final labelStyle = Styles.inputLabelText.copyWith(
-      color: secure ? Styles.trifidBlue : Styles.inputLabelText.color,
+      color: widget.secure ? Styles.trifidBlue : Styles.inputLabelText.color,
     );
     final textStyle = Styles.inputText.copyWith(
-      color: secure ? Styles.trifidBlue : Styles.inputText.color,
+      color: widget.secure ? Styles.trifidBlue : Styles.inputText.color,
     );
 
-    final textField = TextFormField(
-      textAlign: centered ? TextAlign.center : TextAlign.start,
+    Widget textField = TextFormField(
+      textAlign: widget.centered ? TextAlign.center : TextAlign.start,
       decoration: InputDecoration(
+        errorStyle: Styles.hiddenText,
         enabledBorder: Styles.inputBorder,
         focusedBorder: Styles.inputBorder,
-        labelText: label,
+        labelText: widget.label,
         labelStyle: labelStyle,
         contentPadding: Styles.inputPadding,
-        prefixText: phone ? "🇺🇸  " : null,
+        prefixText: widget.phone ? "🇺🇸  " : null,
         prefixStyle: TextStyle(color: Colors.black),
       ),
       style: textStyle,
-      validator: validator,
-      onSaved: onSaved,
+      validator: (value) {
+        if (widget.validator != null) {
+          final result = widget.validator(value);
+          setState(() => error = result);
+          return result;
+        }
+        return null;
+      },
+      onSaved: widget.onSaved,
     );
 
-    return secure
+    if (error != null)
+      textField = Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          textField,
+          Container(
+            color: Styles.errorRed,
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              error,
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      );
+
+    return widget.secure
         ? Container(
             color: Styles.trifidBlue.withOpacity(0.05),
             child: Stack(
