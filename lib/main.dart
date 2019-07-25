@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:myapp/styles.dart';
+import 'package:bluescreen/styles.dart';
 
 void main() => runApp(BlueScreen());
 
@@ -248,7 +248,7 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         // TODO: use native date selector
                         TextInput(
                           label: "Date of Birth",
-                          text: "June 6, 1980",
+                          text: "07/06/1980",
                           validator: (value) => value.isEmpty
                               ? "Please enter a date of birth"
                               : null,
