@@ -143,6 +143,12 @@ abstract class Styles {
     color: trifidBlue,
   );
 
+  static const errorIcon =  Icon(
+    FontAwesomeIcons.timesCircle,
+    size: 20.0,
+    color: errorRed,
+  );
+
   static const trifidBlue = Color(0xff3096d6);
   static const grey800 = Color(0xff50555c);
   static const grey500 = Color(0xff888888);

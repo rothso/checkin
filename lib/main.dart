@@ -132,7 +132,6 @@ class ClinicCodeState extends State<ClinicCodeScreen> {
                     style: Styles.codeError,
                   ),
                 SizedBox(height: 16.0),
-                // TODO: disable press until form is valid
                 ContinueButton(
                   onPressed: submitEnabled ? () => _submit(context) : null,
                   text: "Continue",
@@ -1132,6 +1131,8 @@ class TextInputState extends State<TextInput> {
   final controller = TextEditingController();
   String error;
 
+  bool get hasError => error != null;
+
   @override
   Widget build(BuildContext context) {
     final secureIcon = Image.asset("assets/secureicon.png", scale: 4);
@@ -1140,7 +1141,9 @@ class TextInputState extends State<TextInput> {
       color: widget.secure ? Styles.trifidBlue : Styles.inputLabelText.color,
     );
     final textStyle = Styles.inputText.copyWith(
-      color: widget.secure ? Styles.trifidBlue : Styles.inputText.color,
+      color: widget.secure
+          ? Styles.trifidBlue
+          : hasError ? Styles.errorRed : Styles.inputText.color,
     );
 
     Widget textField = TextFormField(
@@ -1154,6 +1157,7 @@ class TextInputState extends State<TextInput> {
         contentPadding: Styles.inputPadding,
         prefixText: widget.phone ? "🇺🇸  " : null,
         prefixStyle: TextStyle(color: Colors.black),
+        suffixIcon: hasError && !widget.secure ? Styles.errorIcon : null,
       ),
       style: textStyle,
       validator: (value) {
@@ -1168,7 +1172,7 @@ class TextInputState extends State<TextInput> {
       controller: controller,
     );
 
-    if (error != null)
+    if (hasError)
       textField = Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
