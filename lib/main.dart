@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:bluescreen/styles.dart';
+import 'package:libphonenumber/libphonenumber.dart';
 
 void main() => runApp(BlueScreen());
 
@@ -267,10 +268,9 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         // TODO: allow addresses to be added, removed, edited
                         AddressInput(),
                         // TODO: phone number masking, change flag
-                        TextInput(
+                        PhoneNumberInput(
+                          formKey: formKey,
                           label: "Phone Number",
-                          text: "(904) 555-1234",
-                          phone: true,
                         ),
                         // TODO: email address validation
                         TextInput(
@@ -323,6 +323,7 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         ContinueButton(
                           onPressed: () {
                             if (formKey.currentState.validate()) {
+//                              formKey.currentState.validate();
                               formKey.currentState.save();
                               Navigator.push(
                                 context,
@@ -1103,12 +1104,52 @@ class RadioInputState extends State<RadioInput> {
   }
 }
 
+class PhoneNumberInput extends StatefulWidget {
+  final GlobalKey<FormState> formKey;
+  final String label;
+
+  PhoneNumberInput({
+    @required this.label,
+    @required this.formKey,
+  });
+
+  @override
+  PhoneNumberInputState createState() => PhoneNumberInputState();
+}
+
+class PhoneNumberInputState extends State<PhoneNumberInput> {
+  String error;
+
+  String _validate(String value) {
+    PhoneNumberUtil.isValidPhoneNumber(
+      phoneNumber: value,
+      isoCode: 'US',
+    ).then((isValid) {
+      setState(() {
+        error = isValid ? null : "Invalid phone number";
+      });
+    });
+    return error;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextInput(
+      label: widget.label,
+      phone: true,
+      errorText: error,
+      validator: _validate,
+    );
+  }
+}
+
 class TextInput extends StatefulWidget {
   final String label;
   final String text;
   final bool secure;
   final bool phone;
   final bool centered;
+  final String errorText;
   final FormFieldValidator<String> validator;
   final FormFieldSetter<String> onSaved;
 
@@ -1119,6 +1160,7 @@ class TextInput extends StatefulWidget {
     this.secure = false,
     this.phone = false,
     this.centered = false,
+    this.errorText,
     this.validator,
     this.onSaved,
   }) : super(key: key);
@@ -1135,6 +1177,12 @@ class TextInputState extends State<TextInput> {
 
   @override
   Widget build(BuildContext context) {
+    // HACK: The phone has to specify an overriding error message
+    setState(() {
+      // TODO: eliminate the need for the widget.phone condition
+      if (widget.phone) error = widget.errorText;
+    });
+
     final secureIcon = Image.asset("assets/secureicon.png", scale: 4);
 
     final labelStyle = Styles.inputLabelText.copyWith(
