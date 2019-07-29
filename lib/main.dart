@@ -1118,27 +1118,17 @@ class PhoneNumberInput extends StatefulWidget {
 }
 
 class PhoneNumberInputState extends State<PhoneNumberInput> {
-  String error;
-
-  String _validate(String value) {
-    PhoneNumberUtil.isValidPhoneNumber(
-      phoneNumber: value,
-      isoCode: 'US',
-    ).then((isValid) {
-      setState(() {
-        error = isValid ? null : "Invalid phone number";
-      });
-    });
-    return error;
-  }
-
   @override
   Widget build(BuildContext context) {
     return TextInput(
       label: widget.label,
       phone: true,
-      errorText: error,
-      validator: _validate,
+      validatorAsync: (value) async {
+        return await PhoneNumberUtil.isValidPhoneNumber(
+          phoneNumber: value,
+          isoCode: 'US',
+        ).then((isValid) => isValid ? null : "Invalid phone number");
+      },
     );
   }
 }
@@ -1149,8 +1139,8 @@ class TextInput extends StatefulWidget {
   final bool secure;
   final bool phone;
   final bool centered;
-  final String errorText;
   final FormFieldValidator<String> validator;
+  final Future<String> Function(String) validatorAsync;
   final FormFieldSetter<String> onSaved;
 
   const TextInput({
@@ -1160,8 +1150,8 @@ class TextInput extends StatefulWidget {
     this.secure = false,
     this.phone = false,
     this.centered = false,
-    this.errorText,
     this.validator,
+    this.validatorAsync,
     this.onSaved,
   }) : super(key: key);
 
@@ -1177,11 +1167,9 @@ class TextInputState extends State<TextInput> {
 
   @override
   Widget build(BuildContext context) {
-    // HACK: The phone has to specify an overriding error message
-    setState(() {
-      // TODO: eliminate the need for the widget.phone condition
-      if (widget.phone) error = widget.errorText;
-    });
+    if (widget.validator != null && widget.validatorAsync != null) {
+      throw ArgumentError("cannot specify both validator and validatorAsync");
+    }
 
     final secureIcon = Image.asset("assets/secureicon.png", scale: 4);
 
@@ -1213,6 +1201,12 @@ class TextInputState extends State<TextInput> {
           final result = widget.validator(value);
           setState(() => error = result);
           return result;
+        } else if (widget.validatorAsync != null) {
+          widget.validatorAsync(value).then((result) {
+            setState(() => error = result);
+          });
+          // Keep the last error if we're validating asynchronously
+          return error;
         }
         return null;
       },
