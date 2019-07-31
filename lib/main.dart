@@ -259,7 +259,11 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         // TODO: custom SSN masking, and hide input when unfocused
                         TextInput(
                           label: "Social Security Number (SSN)",
+                          keyboardType: TextInputType.number,
                           secure: true,
+                          validator: (value) => value.isEmpty
+                              ? "Please enter your social security number"
+                              : null,
                         ),
                         // TODO: allow addresses to be added, removed, edited
                         AddressInput(),
@@ -269,6 +273,7 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         // TODO: email address validation
                         TextInput(
                           label: "Email (optional)",
+                          keyboardType: TextInputType.emailAddress,
                         ),
                         ListHeader("EMERGENCY CONTACT"),
                         TextInput(
@@ -1164,7 +1169,8 @@ class PhoneNumberInputState extends State<PhoneNumberInput> {
       controller: controller,
       keyboardType: TextInputType.number,
       label: widget.label,
-      prefixText: "🇺🇸  ", // TODO: change based on phone number
+      // TODO: change based on phone number
+      prefixText: "🇺🇸  ",
       validatorAsync: validatePhoneNumber,
     );
   }
@@ -1199,6 +1205,7 @@ class TextInput extends StatefulWidget {
 }
 
 class TextInputState extends State<TextInput> {
+  final controller = TextEditingController();
   String error;
 
   bool get hasError => error != null;
@@ -1227,6 +1234,7 @@ class TextInputState extends State<TextInput> {
         errorStyle: Styles.hiddenText,
         enabledBorder: Styles.inputBorder,
         focusedBorder: Styles.inputBorder,
+        errorBorder: Styles.inputBorder,
         labelText: widget.label,
         labelStyle: labelStyle,
         contentPadding: Styles.inputPadding,
@@ -1250,8 +1258,24 @@ class TextInputState extends State<TextInput> {
         return null;
       },
       onSaved: widget.onSaved,
-      controller: widget.controller,
+      controller: widget.controller ?? controller,
     );
+
+    if (widget.secure)
+      textField = Container(
+        color: Styles.trifidBlue.withOpacity(0.05),
+        child: Stack(
+          children: [
+            textField,
+            Positioned(
+              right: 10,
+              top: 0,
+              bottom: 0,
+              child: secureIcon,
+            ),
+          ],
+        ),
+      );
 
     if (hasError)
       textField = Column(
@@ -1271,21 +1295,6 @@ class TextInputState extends State<TextInput> {
         ],
       );
 
-    return widget.secure
-        ? Container(
-            color: Styles.trifidBlue.withOpacity(0.05),
-            child: Stack(
-              children: [
-                textField,
-                Positioned(
-                  right: 10,
-                  top: 0,
-                  bottom: 0,
-                  child: secureIcon,
-                ),
-              ],
-            ),
-          )
-        : textField;
+    return textField;
   }
 }
