@@ -221,7 +221,6 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                               Flexible(
                                 child: TextInput(
                                   label: "First Name",
-                                  text: "Peter",
                                   validator: (value) => value.isEmpty
                                       ? "Please enter a first name"
                                       : null,
@@ -231,7 +230,6 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                               Flexible(
                                 child: TextInput(
                                   label: "Last Name",
-                                  text: "Parker",
                                   validator: (value) => value.isEmpty
                                       ? "Please enter a last name"
                                       : null,
@@ -242,7 +240,6 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         ),
                         TextInput(
                           label: "Middle Name",
-                          text: "Ben",
                           validator: (value) => value.isEmpty
                               ? "Please enter a middle name"
                               : null,
@@ -250,7 +247,6 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         // TODO: use native date selector
                         TextInput(
                           label: "Date of Birth",
-                          text: "07/06/1980",
                           validator: (value) => value.isEmpty
                               ? "Please enter a date of birth"
                               : null,
@@ -263,31 +259,33 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         // TODO: custom SSN masking, and hide input when unfocused
                         TextInput(
                           label: "Social Security Number (SSN)",
-                          text: "XXX-XX-XXXX",
                           secure: true,
                         ),
                         // TODO: allow addresses to be added, removed, edited
                         AddressInput(),
-                        // TODO: phone number masking, change flag
                         PhoneNumberInput(
                           label: "Phone Number",
                         ),
                         // TODO: email address validation
                         TextInput(
                           label: "Email (optional)",
-                          text: "parker.p@gmail.com",
                         ),
                         ListHeader("EMERGENCY CONTACT"),
                         TextInput(
                           label: "Emergency Contact Name",
-                          text: "Ned Leeds",
+                          validator: (value) => value.isEmpty
+                              ? "Please enter an emergency contact"
+                              : null,
                         ),
                         PhoneNumberInput(
                           label: "Emergency Contact Phone Number",
                         ),
                         TextInput(
                           label: "Relationship to Emergency Contact",
-                          text: "Brother",
+                          validator: (value) => value.isEmpty
+                              ? "Please enter your relationship to the "
+                                  "emergency contact"
+                              : null,
                         ),
                         ListHeader("DEMOGRAPHICS"),
                         RadioInput("Race", {
@@ -320,7 +318,6 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         ContinueButton(
                           onPressed: () {
                             if (formKey.currentState.validate()) {
-//                              formKey.currentState.validate();
                               formKey.currentState.save();
                               Navigator.push(
                                 context,
@@ -392,18 +389,15 @@ class InsuranceScreen extends StatelessWidget {
                   children: [
                     new TextInput(
                       label: "Insurance Company Name",
-                      text: "Florida Blue",
                     ),
                     new PhoneNumberInput(
                       label: "Insurance Company Phone Number",
                     ),
                     new TextInput(
                       label: "Policy Holder First Name",
-                      text: "Peter",
                     ),
                     new TextInput(
                       label: "Policy Holder Last Name",
-                      text: "Parker",
                     ),
                     IntrinsicHeight(
                       child: Row(
@@ -412,7 +406,6 @@ class InsuranceScreen extends StatelessWidget {
                             // TODO: numbers only
                             child: new TextInput(
                               label: "Policy Number",
-                              text: "1234",
                             ),
                           ),
                           VerticalDivider(width: 1, color: Styles.grey300),
@@ -420,7 +413,6 @@ class InsuranceScreen extends StatelessWidget {
                             // TODO: numbers only
                             child: new TextInput(
                               label: "Group Number",
-                              text: "5432",
                             ),
                           ),
                         ],
@@ -800,7 +792,6 @@ class YearInput extends StatelessWidget {
           Expanded(
             flex: 1,
             child: TextInput(
-              text: year,
               centered: true,
             ),
           ),
@@ -1133,7 +1124,10 @@ class PhoneNumberInputState extends State<PhoneNumberInput> {
           .map<String>((Match match) => match.group(0))
           .join();
 
-      if (phoneNumber.isNotEmpty) {
+      if (phoneNumber.isEmpty) {
+        // Remove invalid chars
+        controller.text = "";
+      } else {
         await PhoneNumberUtil.formatAsYouType(
           phoneNumber: phoneNumber,
           isoCode: 'US',
@@ -1168,6 +1162,7 @@ class PhoneNumberInputState extends State<PhoneNumberInput> {
   Widget build(BuildContext context) {
     return TextInput(
       controller: controller,
+      keyboardType: TextInputType.number,
       label: widget.label,
       prefixText: "🇺🇸  ", // TODO: change based on phone number
       validatorAsync: validatePhoneNumber,
@@ -1177,10 +1172,10 @@ class PhoneNumberInputState extends State<PhoneNumberInput> {
 
 class TextInput extends StatefulWidget {
   final String label;
-  final String text;
   final bool secure;
   final bool centered;
   final String prefixText;
+  final TextInputType keyboardType;
   final TextEditingController controller;
   final FormFieldValidator<String> validator;
   final Future<String> Function(String) validatorAsync;
@@ -1189,10 +1184,10 @@ class TextInput extends StatefulWidget {
   const TextInput({
     Key key,
     this.label,
-    this.text,
     this.secure = false,
     this.centered = false,
     this.prefixText,
+    this.keyboardType,
     this.controller,
     this.validator,
     this.validatorAsync,
@@ -1227,6 +1222,7 @@ class TextInputState extends State<TextInput> {
 
     Widget textField = TextFormField(
       textAlign: widget.centered ? TextAlign.center : TextAlign.start,
+      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         errorStyle: Styles.hiddenText,
         enabledBorder: Styles.inputBorder,
