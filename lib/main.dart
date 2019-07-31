@@ -282,11 +282,8 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                           label: "Emergency Contact Name",
                           text: "Ned Leeds",
                         ),
-                        // TODO: same phone number stuff as above
-                        TextInput(
+                        PhoneNumberInput(
                           label: "Emergency Contact Phone Number",
-                          text: "(904) 555-1235",
-                          phone: true,
                         ),
                         TextInput(
                           label: "Relationship to Emergency Contact",
@@ -397,11 +394,8 @@ class InsuranceScreen extends StatelessWidget {
                       label: "Insurance Company Name",
                       text: "Florida Blue",
                     ),
-                    // TODO: same as other phone number fields
-                    new TextInput(
+                    new PhoneNumberInput(
                       label: "Insurance Company Phone Number",
-                      text: "(904) 555-1236",
-                      phone: true,
                     ),
                     new TextInput(
                       label: "Policy Holder First Name",
@@ -1116,57 +1110,23 @@ class PhoneNumberInput extends StatefulWidget {
 }
 
 class PhoneNumberInputState extends State<PhoneNumberInput> {
-  @override
-  Widget build(BuildContext context) {
-    return TextInput(
-      label: widget.label,
-      phone: true,
-      validatorAsync: (value) async {
-        return await PhoneNumberUtil.isValidPhoneNumber(
-          phoneNumber: value,
-          isoCode: 'US',
-        ).then((isValid) => isValid ? null : "Invalid phone number");
-      },
-    );
-  }
-}
-
-class TextInput extends StatefulWidget {
-  final String label;
-  final String text;
-  final bool secure;
-  final bool phone;
-  final bool centered;
-  final FormFieldValidator<String> validator;
-  final Future<String> Function(String) validatorAsync;
-  final FormFieldSetter<String> onSaved;
-
-  const TextInput({
-    Key key,
-    this.label,
-    this.text,
-    this.secure = false,
-    this.phone = false,
-    this.centered = false,
-    this.validator,
-    this.validatorAsync,
-    this.onSaved,
-  }) : super(key: key);
-
-  @override
-  TextInputState createState() => TextInputState();
-}
-
-class TextInputState extends State<TextInput> {
   final controller = TextEditingController();
-  String error;
 
   // Prevent race conditions with async formatting
   final lock = Lock();
 
-  bool get hasError => error != null;
+  Future<String> validatePhoneNumber(String text) async {
+    if (text.isEmpty) {
+      return Future<String>.value("Please enter a phone number");
+    } else {
+      return await PhoneNumberUtil.isValidPhoneNumber(
+        phoneNumber: text,
+        isoCode: 'US',
+      ).then((isValid) => isValid ? null : "Invalid phone number");
+    }
+  }
 
-  void formatPhone() async {
+  void formatPhoneNumber() async {
     lock.synchronized(() async {
       final phoneNumber = RegExp(r'\d+')
           .allMatches(controller.text)
@@ -1191,32 +1151,62 @@ class TextInputState extends State<TextInput> {
     });
   }
 
-  void formatPhone2() {
-    if (controller.text.isNotEmpty) {
-      final text = controller.text;
-      controller.value = controller.value.copyWith(
-        text: text.toUpperCase(),
-        selection: TextSelection(
-          baseOffset: text.length,
-          extentOffset: text.length,
-        ),
-        composing: TextRange.empty,
-      );
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    if (widget.phone) controller.addListener(formatPhone);
+    controller.addListener(formatPhoneNumber);
   }
 
   @override
   void dispose() {
     super.dispose();
-    controller.removeListener(formatPhone);
+    controller.removeListener(formatPhoneNumber);
     controller.dispose();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextInput(
+      controller: controller,
+      label: widget.label,
+      prefixText: "🇺🇸  ", // TODO: change based on phone number
+      validatorAsync: validatePhoneNumber,
+    );
+  }
+}
+
+class TextInput extends StatefulWidget {
+  final String label;
+  final String text;
+  final bool secure;
+  final bool centered;
+  final String prefixText;
+  final TextEditingController controller;
+  final FormFieldValidator<String> validator;
+  final Future<String> Function(String) validatorAsync;
+  final FormFieldSetter<String> onSaved;
+
+  const TextInput({
+    Key key,
+    this.label,
+    this.text,
+    this.secure = false,
+    this.centered = false,
+    this.prefixText,
+    this.controller,
+    this.validator,
+    this.validatorAsync,
+    this.onSaved,
+  }) : super(key: key);
+
+  @override
+  TextInputState createState() => TextInputState();
+}
+
+class TextInputState extends State<TextInput> {
+  String error;
+
+  bool get hasError => error != null;
 
   @override
   Widget build(BuildContext context) {
@@ -1244,7 +1234,7 @@ class TextInputState extends State<TextInput> {
         labelText: widget.label,
         labelStyle: labelStyle,
         contentPadding: Styles.inputPadding,
-        prefixText: widget.phone ? "🇺🇸  " : null,
+        prefixText: widget.prefixText,
         prefixStyle: TextStyle(color: Colors.black),
         suffixIcon: hasError && !widget.secure ? Styles.errorIcon : null,
       ),
@@ -1264,7 +1254,7 @@ class TextInputState extends State<TextInput> {
         return null;
       },
       onSaved: widget.onSaved,
-      controller: controller,
+      controller: widget.controller,
     );
 
     if (hasError)
