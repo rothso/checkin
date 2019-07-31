@@ -25,7 +25,11 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   font_awesome_flutter: ^8.4.0
-  libphonenumber: ^1.0.0
+  synchronized: ^2.1.0
+  libphonenumber:
+    git:
+      url: git://github.com/benql/flutter-libphonenumber.git
+      ref: master
 
 dev_dependencies:
   flutter_test:

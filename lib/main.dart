@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:bluescreen/styles.dart';
 import 'package:libphonenumber/libphonenumber.dart';
+import 'package:synchronized/synchronized.dart';
 
 void main() => runApp(BlueScreen());
 
@@ -269,7 +270,6 @@ class PersonalInfoState extends State<PersonalInfoScreen> {
                         AddressInput(),
                         // TODO: phone number masking, change flag
                         PhoneNumberInput(
-                          formKey: formKey,
                           label: "Phone Number",
                         ),
                         // TODO: email address validation
@@ -1105,12 +1105,10 @@ class RadioInputState extends State<RadioInput> {
 }
 
 class PhoneNumberInput extends StatefulWidget {
-  final GlobalKey<FormState> formKey;
   final String label;
 
   PhoneNumberInput({
     @required this.label,
-    @required this.formKey,
   });
 
   @override
@@ -1163,7 +1161,62 @@ class TextInputState extends State<TextInput> {
   final controller = TextEditingController();
   String error;
 
+  // Prevent race conditions with async formatting
+  final lock = Lock();
+
   bool get hasError => error != null;
+
+  void formatPhone() async {
+    lock.synchronized(() async {
+      final phoneNumber = RegExp(r'\d+')
+          .allMatches(controller.text)
+          .map<String>((Match match) => match.group(0))
+          .join();
+
+      if (phoneNumber.isNotEmpty) {
+        await PhoneNumberUtil.formatAsYouType(
+          phoneNumber: phoneNumber,
+          isoCode: 'US',
+        ).then((text) {
+          controller.value = controller.value.copyWith(
+            text: text,
+            selection: TextSelection(
+              baseOffset: text.length,
+              extentOffset: text.length,
+            ),
+            composing: TextRange.empty,
+          );
+        });
+      }
+    });
+  }
+
+  void formatPhone2() {
+    if (controller.text.isNotEmpty) {
+      final text = controller.text;
+      controller.value = controller.value.copyWith(
+        text: text.toUpperCase(),
+        selection: TextSelection(
+          baseOffset: text.length,
+          extentOffset: text.length,
+        ),
+        composing: TextRange.empty,
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.phone) controller.addListener(formatPhone);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.removeListener(formatPhone);
+    controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
